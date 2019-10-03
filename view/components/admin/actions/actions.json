@@ -1,9 +1,5 @@
 {
-    "buttons": {
-        "edit": {               
-            "title": "Edit Category",
-            "content": "Edit"
-        },
+    "buttons": {        
         "delete": {               
             "title": "Delete Category",
             "content": "Delete"
@@ -11,14 +7,6 @@
         "add": {               
             "title": "Add sub Category",
             "content": "Add"
-        },
-        "disable": {               
-            "title": "Disable Category",
-            "content": "Disable"
-        },
-        "enable": {               
-            "title": "Enable Category",
-            "content": "Enable"
-        }         
+        }          
     }
 }

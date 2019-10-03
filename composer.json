@@ -1,7 +1,7 @@
 {
-    "name": "arikaim/category-extension",
-    "description": "Arikaim CMS Category extension",
-    "keywords": ["Extension", "Arikaim CMS Category extension"],
+    "name": "arikaim/tags-extension",
+    "description": "Arikaim CMS Tags extension",
+    "keywords": ["Extension", "Arikaim CMS Tags extension"],
     "type": "arikaim-extension",
     "license": "GPL-3.0-or-later",
     "authors": [{
@@ -17,6 +17,6 @@
         "branch-alias": {
             "dev-master": "1.0-dev"
         },
-        "path": "category"
+        "path": "tags"
     }
 }

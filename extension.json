@@ -1,18 +1,17 @@
 {
-    "title": "Categories",
-    "icon": "list",
-    "class": "Category",
-    "type": "user",
-    "description": "Add, edit, remove site categories.",
-    "short_description": "Manage site categories.",
+    "title": "Tags",
+    "icon": "tags",
+    "class": "Tags",
+    "type": "system",
+    "description": "Add, edit, remove tags.",
+    "short_description": "Manage tags and tags relations.",
     "version": "1.0",
     "position": "2",
     "admin_menu": {        
-        "title": "Categories",
-        "icon": "list",
-        "page_title": "Categories",
-        "page_icon": "list",
-        "sub_title": "Add,Edit,Remove,View",
-        "component": "category::admin"
+        "title": "Tags",
+        "icon": "tags",
+        "page_title": "Tags",
+        "page_icon": "tags",       
+        "component": "tags::admin"
     }
 }

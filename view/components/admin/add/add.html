@@ -1,6 +1,5 @@
 {% component 'components:tabs.vertical.content' %}
-<div class="ui hidden divider"></div>
-<div class="ui" id="form_content"> 
-    {{ component('category::admin.form',{ parent_id: parent_id, language: language }) }}
+<div class="ui mt-8" id="form_content"> 
+    {{ component('tags::admin.form',{ parent_id: parent_id, language: language }) }}
 </div>   
 {% endcomponent %}

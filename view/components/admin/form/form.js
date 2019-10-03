@@ -10,14 +10,12 @@
  */
 
 arikaim.page.onReady(function() {   
-    
-    category.initCategoryDropDown();
-    
-    arikaim.ui.form.addRules("#category_form",{
+ 
+    arikaim.ui.form.addRules("#tags_form",{
         inline: false,
         fields: {
             title: {
-            identifier: "title",      
+            identifier: "word",      
                 rules: [{
                     type: "minLength[2]"       
                 }]

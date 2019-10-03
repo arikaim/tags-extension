@@ -1,3 +1,3 @@
 $(document).ready(function() {
-    arikaim.ui.tab('.category-tab-item','category_content',['language']);
+    arikaim.ui.tab('.tags-tab-item','tags_content',['language']);
 });

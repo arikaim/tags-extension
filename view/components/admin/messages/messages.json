@@ -1,12 +1,8 @@
 {
-    "add": "Category was created successfully.",
-    "update": "Category was saved successfully.",
-    "delete": "Category was deleted successfully.",
-    "status": "Category status was changed successfully.",
+    "add": "Tag was added successfully.",
+    "delete": "Tag was deleted successfully.",   
     "errors": {
-        "add": "Can't create category.",
-        "delete": "Can't delete category",
-        "status": "Can't change category sttus",
-        "update": "Can't save category"
+        "add": "Can't create tag.",
+        "delete": "Can't delete tag"        
     }
 }
