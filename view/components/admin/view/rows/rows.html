@@ -1,0 +1,9 @@
+{% component 'components:view.rows' %}
+    {% set tags = createModel('Tags','tags').get() %}
+    {% set items = paginate(tags,'tags') %}
+    {% for item in items.getItems() %}
+    <tr>
+        <td>{{ item.word }}</td>
+    </tr>
+    {% endfor %}
+{% endcomponent %}

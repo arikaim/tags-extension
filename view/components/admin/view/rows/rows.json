@@ -1,0 +1,8 @@
+{    
+    "buttons": {
+        "delete": {      
+            "content": "Delete",          
+            "title": "Delte tag"
+        }  
+    }
+}
