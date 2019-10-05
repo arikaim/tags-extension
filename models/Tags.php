@@ -12,11 +12,14 @@ namespace Arikaim\Extensions\Tags\Models;
 use Illuminate\Database\Eloquent\Model;
 
 use Arikaim\Extensions\Tags\Models\TagsTranslations;
+use Arikaim\Core\Db\Model as DbModel;
 
 use Arikaim\Core\Traits\Db\Uuid;
 use Arikaim\Core\Traits\Db\Position;
 use Arikaim\Core\Traits\Db\Find;
 use Arikaim\Core\Traits\Db\Translations;
+
+use Arikaim\Core\Utils\Text;
 
 class Tags extends Model  
 {
@@ -27,7 +30,7 @@ class Tags extends Model
 
     protected $table = "tags";
 
-    protected $translation_reference_attribute = 'tag_id';
+    protected $translation_reference_attribute = 'tags_id';
 
     protected $translation_model_class = TagsTranslations::class;
 
@@ -37,49 +40,82 @@ class Tags extends Model
    
     public $timestamps = false;
     
-
+    /**
+     * Remove tag, translations and relations
+     *
+     * @param string|integer $id
+     * @return bool
+     */
     public function remove($id)
     {
-       
         $model = $this->findById($id);
         if (is_object($model) == false) {
             return false;
         }    
+
+        $relations = DbModel::TagsRelations('tags');
+        $relations->deleteRelations($model->id);
+
         $model->removeTranslations();
 
         return $model->delete();      
     }
 
-    public function getTranslationTitle($language, $default = null)
+    public function hasTag($tag)
     {
-        $model = $this->translation($language);     
-        if ($model == false) {
-            return $default; 
-        } 
-        
-        return (isset($model->title) == true) ? $model->title : null;
+        return is_object($this->findTag($tag));
     }
 
-    public function hasCategory($title, $parent_id = null)
+    public function findTag($tag)
     { 
-        return is_object($this->findCategory($title,$parent_id));
+        $translations = DbModel::TagsTranslations('tags');      
+        $translation = $translations->where('word','=',$tag)->first();
+
+        return (is_object($translation) == false) ? null : $this->findByid($translation->tag_id);                           
     }
 
-    
+    public function createTag($tag, $language = null)
+    {
+        echo "create $tag";
+        if ($this->hasTag($tag) == false) {
+            echo "create";
+            $model = $this->create();
+            echo "ID:" . $model->id;
 
-    public function createFromArray(array $items, $parent_id = null, $language = 'en')
+            //var_dump($model);
+
+            return  $model->saveTranslation(['word' => $tag],$language,$model->id);
+        }
+        return false;
+    }
+
+    /**
+     * Add tag(s)
+     *
+     * @param string|array $tag
+     * @param string|null $language
+     * @return array|false
+     */
+    public function add($tag, $language = null)
+    {
+        if (empty($tag) == true) {
+            return false;
+        }
+        $words = Text::tokenize($tag);
+
+        return $this->addTags($words,$language);
+    }
+
+    public function addTags(array $tags, $language = null)
     {
         $result = [];
-        foreach ($items as $key => $value) {                    
-            $model = $this->findCategory($value,$parent_id);
-
-            if (is_object($model) == false) {       
-               
-                $model = $this->create(['parent_id' => $parent_id]);
-                $model->saveTranslation(['title' => $value], $language, null); 
-            }
-            $result[] = $model->id;            
+        foreach ($tags as $tag) {                    
+            $model = $this->createTag($tag,$language);
+            if (is_object($model) == true) {       
+                $result[] = $model->id;                     
+            }                  
         }
+
         return $result;
     }
 }

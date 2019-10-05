@@ -36,4 +36,18 @@ class Tags extends Extension
 
         return true;
     }   
+
+    /**
+     * Uninstall extension
+     *
+     * @return boolean
+     */
+    public function unInstall()
+    {
+        $this->dropDbTable('TagsRelationsSchema');
+        $this->dropDbTable('TagsTranslationsSchema');
+        $this->dropDbTable('TagsSchema');
+       
+        return true;
+    }
 }

@@ -31,7 +31,7 @@ class TagsTranslationsSchema extends Schema
      */
     public function create($table) 
     {
-        $table->tableTranslations('tag_id','tags',function($table) {           
+        $table->tableTranslations('tags_id','tags',function($table) {           
             $table->string('word')->nullable(false);          
             $table->unique('word');
         });       
