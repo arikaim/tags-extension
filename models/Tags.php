@@ -68,22 +68,24 @@ class Tags extends Model
 
     public function findTag($tag)
     { 
-        $translations = DbModel::TagsTranslations('tags');      
-        $translation = $translations->where('word','=',$tag)->first();
+        echo "find:$tag";
+        $model = $this->where('id','>',0);
+        $q = $model->translations()->getQuery()->where('word','=',$tag);
+        echo DbModel::getSql($q);
+     
+
+        $translation = $model->translations()->getQuery()->where('word','=',$tag)->first();  
+        var_dump($translation);
 
         return (is_object($translation) == false) ? null : $this->findByid($translation->tag_id);                           
     }
 
     public function createTag($tag, $language = null)
-    {
-        echo "create $tag";
-        if ($this->hasTag($tag) == false) {
-            echo "create";
+    {       
+        if ($this->hasTag($tag) == false) {    
+            echo "no tag";
+            exit();       
             $model = $this->create();
-            echo "ID:" . $model->id;
-
-            //var_dump($model);
-
             return  $model->saveTranslation(['word' => $tag],$language,$model->id);
         }
         return false;

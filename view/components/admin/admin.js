@@ -12,12 +12,12 @@
 function TagsControlPanel() {
     var self = this;
 
-    this.delete = function(uuid,onSuccess,onError) {
+    this.delete = function(uuid, onSuccess, onError) {
         return arikaim.delete('/api/tags/admin/delete/' + uuid,onSuccess,onError);          
     };
 
-    this.add = function(data,onSuccess,onError) {
-        return arikaim.post('/api/tags/admin/delete/',data, onSuccess,onError);          
+    this.add = function(data, onSuccess, onError) {
+        return arikaim.post('/api/tags/admin/add',data,onSuccess,onError);          
     };
 
     this.loadAddTag = function(parent_id, language) {

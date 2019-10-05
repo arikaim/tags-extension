@@ -41,25 +41,21 @@ class TagsControlPanel extends ApiController
         $this->requireControlPanelPermission();
         
         $this->onDataValid(function($data) {
-            $category = Model::Tags('category');
-                                                
-            $model = $category->create($data->toArray());
+            $language = $data->get('language',null);
+            $tags = $data->get('tags',null);
 
-            if (is_object($model) == true) {                      
-                $result = $model->saveTranslation($data->slice(['title','description']),$data['language']);                              
-            } else {
-                $result = false;
-            }
-            $this->setResponse($result,function() use($model,$data) {                                
+            $model = Model::Tags('tags');                
+            $result = $model->add($tags,$language);
+ 
+            $this->setResponse($result,function() use($result,$language) {                                
                 $this
                     ->message('add')
-                    ->field('id',$model->id)
-                    ->field('uuid',$model->uuid);           
+                    ->field('tags',$result)
+                    ->field('language',$language);           
             },'errors.add');
         });
         $data           
-            ->addRule('text:min=2','tag')
-            ->addRule('text:min=2|max=2','language')
+            ->addRule('text:min=2','tags')           
             ->validate();       
     }
 
@@ -77,7 +73,7 @@ class TagsControlPanel extends ApiController
 
         $this->onDataValid(function($data) {
             $uuid = $data->get('uuid');
-            $result = Model::Category('category')->remove($uuid);
+            $result = Model::Tags('tags')->remove($uuid);
 
             $this->setResponse($result,function() use($uuid) {            
                 $this

@@ -1,9 +1,18 @@
 {% component 'components:view.rows' %}
-    {% set tags = createModel('Tags','tags').get() %}
+    {% set tags = createModel('Tags','tags').orderBy('position') %}
     {% set items = paginate(tags,'tags') %}
+   
     {% for item in items.getItems() %}
     <tr>
-        <td>{{ item.word }}</td>
+        <td>
+            <div class="ui basic mini icon button delete-button" uuid="{{ item.uuid }}" {{ buttons.delete.title|attr('title') }}  data-title="{{ full_title|string(' / ') }}">
+                <i class="icon orange trash"></i>                   
+            </div>
+        </td>
+        <td>{{ item.translation(language).word }}</td>
+        <td>
+
+        </td>
     </tr>
     {% endfor %}
 {% endcomponent %}

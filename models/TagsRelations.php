@@ -27,7 +27,7 @@ class TagsRelations extends Model
     protected $table = "tags_relations";
 
     protected $fillable = [
-        'tag_id',
+        'tags_id',
         'relation_id',
         'relation_type'       
     ];
@@ -36,5 +36,5 @@ class TagsRelations extends Model
 
     protected $relation_model_class = Tags::class;
 
-    protected $relation_attribute_name = 'tag_id';
+    protected $relation_attribute_name = 'tags_id';
 }

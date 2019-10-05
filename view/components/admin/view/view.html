@@ -1,11 +1,21 @@
 {% component 'components:tabs.vertical.content' %}
 {% set class = 'sixteen wide column' %}
-
-
-<div class="mt-10" id="tags_rows" component="tags::admin.view.rows" namespace="tags">
-    {{ component('tags::admin.view.rows',{ language: language }) }}   
+<div class="mt-8">
+    {{ component('components:search',{ language: language }) }} 
 </div>
+<table class="ui compact stackable borderless  basic table mt-2">
+    <thead>
+        <tr class=" table-head">                
+            <th class="collapsing">{{ columns.actions }}</th>
+            <th class="collapsing two wide ">{{ columns.tag }}</th>
+            <th class="collapsing " >{{ columns.relations }}</th>                 
+        </tr>
+    </thead>
+    <tbody id="tags_rows" component="tags::admin.view.rows" namespace="tags">
+        {{ component('tags::admin.view.rows',{ language: language }) }}   
+    </tbody>  
+</table>
 <div class="mt-2">
-        {{ component('components:paginator',{ namespace: 'tags' }) }}
+    {{ component('components:paginator',{ namespace: 'tags' }) }}
 </div>
 {% endcomponent %}

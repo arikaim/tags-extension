@@ -10,7 +10,7 @@
    
     <div class="field required">
         <label>{{ tag.label }}</label>
-        <input type="text" name="word" id="word" {{ title.placeholder|attr('placeholder') }} value="{{ tags.translation(language).word }}">  
+        <input type="text" name="tags" id="tags" {{ title.placeholder|attr('placeholder') }} value="{{ tags.translation(language).word }}">  
     </div>                  
     <div class="field">
         {{ component('components:language.label',{ language: language, class: 'basic' }) }}       

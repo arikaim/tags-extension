@@ -14,8 +14,8 @@ arikaim.page.onReady(function() {
     arikaim.ui.form.addRules("#tags_form",{
         inline: false,
         fields: {
-            title: {
-            identifier: "word",      
+            tags: {
+                identifier: "tags",      
                 rules: [{
                     type: "minLength[2]"       
                 }]
