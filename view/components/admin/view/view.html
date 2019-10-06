@@ -1,7 +1,15 @@
 {% component 'components:tabs.vertical.content' %}
 {% set class = 'sixteen wide column' %}
-<div class="mt-8">
-    {{ component('components:search',{ language: language }) }} 
+
+<div class="ui stackable grid">
+    <div class="sixteen wide column mt-10">           
+        {{ component("components:search",{ namespace: 'tags' }) }}
+    </div>
+</div>
+<div class="ui stackable text menu">
+    <div class="item right floated">       
+        {{ component('components:paginator.dropdown',{ namespace: 'tags' }) }}
+    </div>
 </div>
 <table class="ui compact stackable borderless  basic table mt-2">
     <thead>
