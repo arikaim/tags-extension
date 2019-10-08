@@ -30,10 +30,6 @@ class Tags extends ApiController
     {
         $this->onDataValid(function($data) {
             $language = $data->get('language',Template::getLanguage());
-            $id = $data->get('id');
-            $tag = Model::Tags('tags')->findById($id);
-            $translation = $tag->translation($language);
-            $data = array_merge($translation->toArray(),$tag->toArray());
         });
 
         $data->validate();

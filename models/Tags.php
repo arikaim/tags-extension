@@ -21,6 +21,9 @@ use Arikaim\Core\Traits\Db\Translations;
 
 use Arikaim\Core\Utils\Text;
 
+/**
+ * Tags model
+ */
 class Tags extends Model  
 {
     use Uuid,
@@ -61,33 +64,46 @@ class Tags extends Model
         return $model->delete();      
     }
 
+    /**
+     * Return true if tag exist
+     *
+     * @param string $tag
+     * @return boolean
+     */
     public function hasTag($tag)
     {
         return is_object($this->findTag($tag));
     }
 
+    /**
+     * Find tag
+     *
+     * @param string $tag
+     * @return Model
+     */
     public function findTag($tag)
     { 
-        echo "find:$tag";
-        $model = $this->where('id','>',0);
-        $q = $model->translations()->getQuery()->where('word','=',$tag);
-        echo DbModel::getSql($q);
-     
-
-        $translation = $model->translations()->getQuery()->where('word','=',$tag)->first();  
-        var_dump($translation);
-
-        return (is_object($translation) == false) ? null : $this->findByid($translation->tag_id);                           
+        return $this->findTranslation('word',$tag);                       
     }
 
+    /**
+     * Create tag
+     *
+     * @param string $tag
+     * @param string $language
+     * @return boolean
+     */
     public function createTag($tag, $language = null)
     {       
-        if ($this->hasTag($tag) == false) {    
-            echo "no tag";
-            exit();       
-            $model = $this->create();
-            return  $model->saveTranslation(['word' => $tag],$language,$model->id);
+        if (empty($tag) == true) {
+            return false;
         }
+        
+        if ($this->hasTag($tag) == false) {               
+            $model = $this->create();
+            return $model->saveTranslation(['word' => $tag],$language,$model->id);
+        }
+      
         return false;
     }
 
@@ -103,11 +119,18 @@ class Tags extends Model
         if (empty($tag) == true) {
             return false;
         }
-        $words = Text::tokenize($tag);
+        $tags = Text::tokenize($tag);
 
-        return $this->addTags($words,$language);
+        return $this->addTags($tags,$language);
     }
 
+    /**
+     * Add tags
+     *
+     * @param array $tags
+     * @param string|null $language
+     * @return array
+     */
     public function addTags(array $tags, $language = null)
     {
         $result = [];

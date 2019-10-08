@@ -1,6 +1,6 @@
 {% component 'components:tabs.vertical.content' %}
 {% set class = 'sixteen wide column' %}
-
+{% set panel_class = 'basic' %}
 <div class="ui stackable grid">
     <div class="sixteen wide column mt-10">           
         {{ component("components:search",{ namespace: 'tags' }) }}
@@ -11,15 +11,15 @@
         {{ component('components:paginator.dropdown',{ namespace: 'tags' }) }}
     </div>
 </div>
-<table class="ui compact stackable borderless  basic table mt-2">
+<table class="ui compact stackable borderless basic table mt-2">
     <thead>
-        <tr class=" table-head">                
-            <th class="collapsing">{{ columns.actions }}</th>
-            <th class="collapsing two wide ">{{ columns.tag }}</th>
-            <th class="collapsing " >{{ columns.relations }}</th>                 
+        <tr class="table-head">                
+            <th class="collapsing one wide">{{ columns.actions }}</th>
+            <th class="collapsing one wide">{{ columns.tag }}</th>
+            <th class="collapsing ten wide" >{{ columns.relations }}</th>                 
         </tr>
     </thead>
-    <tbody id="tags_rows" component="tags::admin.view.rows" namespace="tags">
+    <tbody id="tags_rows" component="tags::admin.view.rows" namespace="tags" language="{{ language }}">
         {{ component('tags::admin.view.rows',{ language: language }) }}   
     </tbody>  
 </table>

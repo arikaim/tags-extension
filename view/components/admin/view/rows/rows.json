@@ -3,6 +3,10 @@
         "delete": {      
             "content": "Delete",          
             "title": "Delte tag"
-        }  
+        },
+        "relations": {
+            "content": "Relations",          
+            "title": "View Relations"
+        }
     }
 }

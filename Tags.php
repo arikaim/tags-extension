@@ -22,12 +22,11 @@ class Tags extends Extension
      * @return boolean
     */
     public function install()
-    {
-        // Api Routes
-        $result = $this->addApiRoute('GET','/api/tags/{id}','Tags','read');         
+    {  
         // Control Panel
-        $result = $this->addApiRoute('POST','/api/tags/admin/add','TagsControlPanel','add','session');   
-        $result = $this->addApiRoute('DELETE','/api/tags/admin/delete/{uuid}','TagsControlPanel','delete','session');          
+        $this->addApiRoute('POST','/api/tags/admin/add','TagsControlPanel','add','session');   
+        $this->addApiRoute('DELETE','/api/tags/admin/delete/{uuid}','TagsControlPanel','delete','session');   
+        $this->addApiRoute('GET','/api/tags/admin/list/[{query}]','TagsControlPanel','getList','session');                
         // Create db tables
         $this->createDbTable('TagsSchema');
         $this->createDbTable('TagsTranslationsSchema');

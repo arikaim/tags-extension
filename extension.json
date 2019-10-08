@@ -7,6 +7,7 @@
     "short_description": "Manage tags and tags relations.",
     "version": "1.0",
     "position": "2",
+    "repository": "https://github.com/arikaim/tags-extension.git",
     "admin_menu": {        
         "title": "Tags",
         "icon": "tags",

@@ -1,5 +1,21 @@
 {% component 'components:tabs.vertical.content' %}
-<div class="ui mt-8" id="form_content"> 
-   
-</div>   
+{% if uuid is not empty %}
+    {% set tags = createModel('Tags','tags').findById(uuid) %}
+{% endif %}
+<div class="ui equal width form mt-4">
+    <div class="ui mt-4">
+        <div class="field">
+            {% if tags is not empty %}
+                {{ component("tags>tags.label",{ tag: tags.translation(language).word, class: 'basic horizontal', 'icon': 'tag', show_label: false }) }}        
+            {% else %}
+                {{ component('tags>tags.dropdown',{ class: ''}) }}
+            {% endif %}    
+        </div>
+    </div>    
+</div>
+<div class="mt-8">
+    {% if uuid is not empty %}
+    {{ component('system:admin.orm.relations',{ extension: 'tags', model: 'TagsRelations' ,id: tags.id }) }}
+    {% endif %}
+</div>
 {% endcomponent %}

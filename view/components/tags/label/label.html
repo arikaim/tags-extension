@@ -1,0 +1,13 @@
+{% set show_label = show_label|default(true) %}
+{% set detail = detail|default(label) %}
+<div class="ui label {{ class }}">
+    {% if icon is not empty %}
+        <i class="ui icon {{ icon }}"></i>
+    {% endif %}
+    {% if show_label == true %}
+        {{ detail }}
+    {% endif %}
+    <div class="detail">
+        {{ tag }}           
+    </div>
+</div>

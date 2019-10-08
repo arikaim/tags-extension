@@ -83,4 +83,29 @@ class TagsControlPanel extends ApiController
         }); 
         $data->validate();
     }
+
+    /**
+     * Gte tag list
+     *
+     * @param object $request
+     * @param object $response
+     * @param Validator $data
+     * @return object
+    */
+    public function getList($request, $response, $data)
+    {
+        $this->requireControlPanelPermission();
+
+        $this->onDataValid(function($data) {
+            $language = $data->get('language',null);
+            $search = $data->get('query','');
+            $size = $data->get('size',15);
+            $query = Model::Tags('tags')->getTranslationsQuery($language);
+            $model = $query->where('word','like',"%$search%")->take($size)->get();
+            
+        });
+
+        $data->validate();
+        return $this->getResponse();
+    }
 }

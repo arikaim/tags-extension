@@ -13,17 +13,32 @@ function TagsView() {
     var self = this;
 
     this.init = function() {
+        var language = $('#tags_rows').attr('language');
+
+        paginator.init('tags_rows',{
+            name: 'tags::admin.view.rows',
+            params: { language: language }
+        },'tags');
+        
+        search.init({
+            id: 'tags_rows',
+            component: 'tags::admin.view.rows',
+            event: 'tags.search.load'
+        },'tags')  
+
+        arikaim.events.on('tags.search.load',function(result) {      
+            paginator.reload();
+            self.initRows();    
+        },'tagsSearch');
+
+        this.initRows();
+    };
+
+    this.initRows = function() {
+
         var component = arikaim.component.get('tags::admin');
         var remove_message = component.getProperty('messages.remove.content');
-      
-        paginator.init('tags_rows');
 
-        arikaim.ui.button('.add-button',function(element) {
-           
-            var language = $(element).attr('language');
-           // category.loadAddCategory(parent_id,language); 
-        });
-      
         arikaim.ui.button('.delete-button',function(element) {
             var uuid = $(element).attr('uuid');
             var title = $(element).attr('data-title');
@@ -34,10 +49,20 @@ function TagsView() {
                 description: message
             },function() {
                 tags.delete(uuid,function(result) {
-                    $('#' + uuid).remove();
-                    $('.class-' + uuid).remove();                   
+                    $('#' + uuid).remove();                
                 });
             });
+        });
+
+        arikaim.ui.button('.relations-button',function(element) {
+            var uuid = $(element).attr('uuid');
+            
+            arikaim.ui.setActiveTab('#relations','.tags-tab-item')   
+            arikaim.page.loadContent({
+                id: 'tags_content',
+                component: 'tags::admin.relations',
+                params: { uuid: uuid }
+            });            
         });
     };
 }

@@ -2,7 +2,7 @@
     "messages": {
         "remove": {
             "title": "Confirm Remove",
-            "content": "Confirm remove category '<b><% title %></b>' and all sub categories."
+            "content": "Confirm remove tag '<b><% title %></b>'"
         }
     },
     "labels": {

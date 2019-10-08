@@ -1,0 +1,11 @@
+{% set id = id|default('tags_dropdown') %}
+{% set name = name|default('tags') %}
+
+<div class="ui search clearable selection dropdown tags-dropdown" id="{{ id }}">
+    <input name="{{ name }}" type="hidden">
+    <i class="dropdown icon"></i>
+    <div class="default text">{{ labels.select }}</div>
+    <div class="menu">
+        <div class="item" data-value="AL">tag</div>
+    </div>
+</div>

@@ -17,6 +17,9 @@ use Arikaim\Core\Traits\Db\Uuid;
 use Arikaim\Core\Traits\Db\Find;
 use Arikaim\Core\Traits\Db\PolymorphicRelations;
 
+/**
+ * Tags relations class
+ */
 class TagsRelations extends Model  
 {
     use 

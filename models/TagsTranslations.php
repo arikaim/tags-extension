@@ -16,6 +16,9 @@ use Arikaim\Extensions\Tags\Models\Tags;
 use Arikaim\Core\Traits\Db\Uuid;
 use Arikaim\Core\Traits\Db\Find;
 
+/**
+ * Tags translations class
+ */
 class TagsTranslations extends Model  
 {
     use 
