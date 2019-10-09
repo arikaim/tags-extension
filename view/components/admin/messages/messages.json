@@ -1,8 +1,10 @@
 {
     "add": "Tag was added successfully.",
+    "update": "Tag was saved successfully.",
     "delete": "Tag was deleted successfully.",   
     "errors": {
         "add": "Can't create tag.",
+        "update": "Can't update tag.",
         "delete": "Can't delete tag"        
     }
 }

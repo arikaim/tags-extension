@@ -1,10 +1,10 @@
-$(document).ready(function() {
-    console.log(arikaim.getBaseUrl());
+$(document).ready(function() {  
     $('.tags-dropdown').dropdown({
-        apiSettings: {
-          // this url just returns a list of tags (with API response expected above)
-          url: arikaim.getBaseUrl() + '/api/tags/list/{query}'
+        apiSettings: {     
+            on: 'now',      
+            url: arikaim.getBaseUrl() + '/api/tags/admin/list/{query}',   
+            cache: false        
         },
-        filterRemoteData: true
+        filterRemoteData: false         
     });
 });

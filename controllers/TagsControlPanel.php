@@ -60,6 +60,37 @@ class TagsControlPanel extends ApiController
     }
 
     /**
+     * Update tag
+     *
+     * @param object $request
+     * @param object $response
+     * @param object $data
+     * @return object
+    */
+    public function updateController($request, $response, $data) 
+    {       
+        $this->requireControlPanelPermission();
+        
+        $this->onDataValid(function($data) {
+            $language = $data->get('language',null);
+            $tags = $data->get('tags',null);
+
+            $model = Model::Tags('tags');                       
+            $result = $model->saveTranslation(['word' => $tags],$language,$data['uuid']);
+
+            $this->setResponse($result,function() use($result,$language,$model) {                                
+                $this
+                    ->message('update')
+                    ->field('uuid',$model->uuid)
+                    ->field('language',$language);           
+            },'errors.update');
+        });
+        $data           
+            ->addRule('text:min=2','tags')           
+            ->validate();       
+    }
+
+    /**
      * Delete tag(s)
      *
      * @param object $request
@@ -102,10 +133,19 @@ class TagsControlPanel extends ApiController
             $size = $data->get('size',15);
             $query = Model::Tags('tags')->getTranslationsQuery($language);
             $model = $query->where('word','like',"%$search%")->take($size)->get();
-            
+
+            $this->setResponse(is_object($model),function() use($model) {     
+                $items = [];
+                foreach ($model as $item) {
+                    $items[]= ['name' => $item['word'],'value' => $item['tags_id']];
+                }
+                $this                    
+                    ->field('success',true)
+                    ->field('results',$items);  
+            },'errors.list');
         });
 
         $data->validate();
-        return $this->getResponse();
+        return $this->getResponse(false,true);
     }
 }

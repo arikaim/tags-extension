@@ -40,4 +40,15 @@ class TagsRelations extends Model
     protected $relation_model_class = Tags::class;
 
     protected $relation_attribute_name = 'tags_id';
+
+
+    /**
+     * Tag model relation
+     *
+     * @return void
+     */
+    public function tag()
+    {
+        return $this->belongsTo(Tags::class,'tags_id');
+    }
 }

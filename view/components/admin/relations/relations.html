@@ -13,7 +13,7 @@
         </div>
     </div>    
 </div>
-<div class="mt-8">
+<div class="mt-8" id="relations_content">
     {% if uuid is not empty %}
     {{ component('system:admin.orm.relations',{ extension: 'tags', model: 'TagsRelations' ,id: tags.id }) }}
     {% endif %}

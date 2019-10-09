@@ -1,0 +1,11 @@
+{% set language = language|default(null) %}
+{% set max = max|default(null) %}
+
+{% set model = createModel('Tags','tags').getTranslationsQuery(language).orderBy('word','asc').orderBy('id','asc') %}
+{% if max is not empty %}
+{% set model = model.take(max) %}
+{% endif %}
+{% set items = model.get() %}
+{% for item in items %}
+<div class="ui label {{ class }}">{{ item.word }}</div>
+{% endfor %}

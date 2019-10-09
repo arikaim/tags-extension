@@ -2,7 +2,7 @@
     "title": "Tags",
     "icon": "tags",
     "class": "Tags",
-    "type": "system",
+    "type": "user",
     "description": "Add, edit, remove tags.",
     "short_description": "Manage tags and tags relations.",
     "version": "1.0",

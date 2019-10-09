@@ -70,9 +70,17 @@ class Tags extends Model
      * @param string $tag
      * @return boolean
      */
-    public function hasTag($tag)
+    public function hasTag($tag, $exclude_id = null)
     {
-        return is_object($this->findTag($tag));
+        $model = $this->findTag($tag);
+        if (is_object($model) == false) {
+            return false;
+        }
+        if (empty($exclude_id) == false) {
+            return ($model->id == $exclude_id || $model->uuid == $exclude_id) ? false : true;
+        }
+        
+        return true;        
     }
 
     /**

@@ -25,6 +25,7 @@ class Tags extends Extension
     {  
         // Control Panel
         $this->addApiRoute('POST','/api/tags/admin/add','TagsControlPanel','add','session');   
+        $this->addApiRoute('PUT','/api/tags/admin/update','TagsControlPanel','update','session');   
         $this->addApiRoute('DELETE','/api/tags/admin/delete/{uuid}','TagsControlPanel','delete','session');   
         $this->addApiRoute('GET','/api/tags/admin/list/[{query}]','TagsControlPanel','getList','session');                
         // Create db tables

@@ -1,7 +1,8 @@
 {
     "labels": {
         "view":  "View",                      
-        "add": "Add",          
+        "add": "Add",    
+        "edit": "Edit",          
         "relations": "Relations"
     }
 }

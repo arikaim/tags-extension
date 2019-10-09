@@ -54,6 +54,17 @@ function TagsView() {
             });
         });
 
+        arikaim.ui.button('.edit-button',function(element) {
+            var uuid = $(element).attr('uuid');
+            
+            arikaim.ui.setActiveTab('#edit_tag','.tags-tab-item')   
+            arikaim.page.loadContent({
+                id: 'tags_content',
+                component: 'tags::admin.edit',
+                params: { uuid: uuid }
+            });            
+        });
+
         arikaim.ui.button('.relations-button',function(element) {
             var uuid = $(element).attr('uuid');
             

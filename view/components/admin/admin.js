@@ -20,6 +20,14 @@ function TagsControlPanel() {
         return arikaim.post('/api/tags/admin/add',data,onSuccess,onError);          
     };
 
+    this.update = function(data, onSuccess, onError) {
+        return arikaim.put('/api/tags/admin/update',data,onSuccess,onError);          
+    };
+
+    this.getList = function(query, onSuccess, onError) {
+        return arikaim.get('/api/tags/admin/list/' + query,onSuccess,onError);          
+    };
+   
     this.loadAddTag = function(parent_id, language) {
         arikaim.ui.setActiveTab('#add_tag','.tags-tab-item')   
         arikaim.page.loadContent({

@@ -1,0 +1,9 @@
+{% set language = language|default(null) %}
+{% set model = createModel('TagsRelations','tags') %}
+{% set items = model.getRelationsQuery(relation_id) %}
+
+{% for item in items.get() %}   
+    <div class="ui label {{ class }}">
+        {{ item.tag.translation(language).word }}       
+    </div>
+{% endfor %}
