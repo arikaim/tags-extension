@@ -1,17 +1,9 @@
-{% set language = language|default(null) %}
-{% set max_items = max_items|default(10) %}
-{% set model = createModel('Tags','tags').orderBy('position','asc').orderBy('id','asc') %}
-{% set items = model.take(max_items).get() %}
-
-{% set page_url = page_url|default('{{ slug }}') %}
-
 <div class="ui list {{ class }}">
-    {% for item in items %}       
-        {% set url = page_url|renderText({ slug: item.translation(language).word }) %}
-        <div class="item {{ item_class }}">      
-            <a href="{{ url(url,true) }}" >        
-                <span class="{{ item_text_class }}">{{ item.translation(language).word }}</span>
-            </a>           
-        </div>              
-    {% endfor %}    
+    {{  component('tags>list.items',{ 
+            item_class: item_class,
+            page_url: page_url,
+            language: language,
+            max_items: max_items 
+        }) 
+    }}   
 </div>

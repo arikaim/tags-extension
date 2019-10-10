@@ -11,7 +11,6 @@ namespace Arikaim\Extensions\Tags\Controllers;
 
 use Arikaim\Core\Db\Model;
 use Arikaim\Core\Controllers\ApiController;
-use Arikaim\Core\Arikaim;
 
 /**
  * Tags control panel controler
@@ -146,6 +145,6 @@ class TagsControlPanel extends ApiController
         });
 
         $data->validate();
-        return $this->getResponse(false,true);
+        return $this->getResponse(true);
     }
 }
