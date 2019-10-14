@@ -32,7 +32,9 @@ class Tags extends Extension
         $this->createDbTable('TagsSchema');
         $this->createDbTable('TagsTranslationsSchema');
         $this->createDbTable('TagsRelationsSchema');
-
+        // console
+        $this->registerConsoleCommand('TagsDelete');
+        
         return true;
     }   
 

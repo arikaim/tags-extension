@@ -18,7 +18,6 @@ use Arikaim\Core\Traits\Db\Uuid;
 use Arikaim\Core\Traits\Db\Position;
 use Arikaim\Core\Traits\Db\Find;
 use Arikaim\Core\Traits\Db\Translations;
-
 use Arikaim\Core\Utils\Text;
 
 /**
@@ -99,20 +98,20 @@ class Tags extends Model
      *
      * @param string $tag
      * @param string $language
-     * @return boolean
+     * @return Model
      */
     public function createTag($tag, $language = null)
     {       
         if (empty($tag) == true) {
             return false;
         }
-        
-        if ($this->hasTag($tag) == false) {               
+        $model = $this->findTag($tag);
+        if (is_object($model) == false) {               
             $model = $this->create();
-            return $model->saveTranslation(['word' => $tag],$language,$model->id);
+            return $model->saveTranslation(['word' => $tag],$language,$model->id);          
         }
       
-        return false;
+        return $model;
     }
 
     /**
@@ -144,9 +143,7 @@ class Tags extends Model
         $result = [];
         foreach ($tags as $tag) {                    
             $model = $this->createTag($tag,$language);
-            if (is_object($model) == true) {       
-                $result[] = $model->id;                     
-            }                  
+            $result[] = $model->id;                                     
         }
 
         return $result;
