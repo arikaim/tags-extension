@@ -108,7 +108,7 @@ class Tags extends Model
         $model = $this->findTag($tag);
         if (is_object($model) == false) {               
             $model = $this->create();
-            return $model->saveTranslation(['word' => $tag],$language,$model->id);          
+            $model->saveTranslation(['word' => $tag],$language,$model->id);          
         }
       
         return $model;
