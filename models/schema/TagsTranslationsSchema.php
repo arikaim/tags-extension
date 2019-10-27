@@ -21,7 +21,7 @@ class TagsTranslationsSchema extends Schema
      *
      * @var string
      */
-    protected $table_name = "tags_translations";
+    protected $tableName = "tags_translations";
 
     /**
      * Create table

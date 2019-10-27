@@ -77,7 +77,7 @@ class TagsControlPanel extends ApiController
             $model = Model::Tags('tags');                       
             $result = $model->saveTranslation(['word' => $tags],$language,$data['uuid']);
 
-            $this->setResponse($result,function() use($result,$language,$model) {                                
+            $this->setResponse($result,function() use($language,$model) {                                
                 $this
                     ->message('update')
                     ->field('uuid',$model->uuid)
@@ -115,7 +115,7 @@ class TagsControlPanel extends ApiController
     }
 
     /**
-     * Gte tag list
+     * Get tag list
      *
      * @param object $request
      * @param object $response

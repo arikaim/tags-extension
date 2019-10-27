@@ -26,7 +26,12 @@ class TagsRelations extends Model
         Uuid,
         PolymorphicRelations,
         Find;
-       
+    
+    /**
+     * Table name
+     *
+     * @var string
+     */
     protected $table = "tags_relations";
 
     protected $fillable = [
@@ -37,10 +42,19 @@ class TagsRelations extends Model
    
     public $timestamps = false;
 
-    protected $relation_model_class = Tags::class;
+    /**
+     * Relation model class
+     *
+     * @var string
+     */
+    protected $relationModelClass = Tags::class;
 
-    protected $relation_attribute_name = 'tags_id';
-
+    /**
+     * Relation column name
+     *
+     * @var string
+     */
+    protected $relationColumnName = 'tags_id';
 
     /**
      * Tag model relation

@@ -9,9 +9,7 @@
 */
 namespace Arikaim\Extensions\Tags\Controllers;
 
-use Arikaim\Core\Db\Model;
 use Arikaim\Core\Controllers\ApiController;
-use Arikaim\Core\View\Template;
 
 /**
  * Tags api controler
@@ -29,7 +27,7 @@ class Tags extends ApiController
     public function readController($request, $response, $data)
     {
         $this->onDataValid(function($data) {
-            $language = $data->get('language',Template::getLanguage());
+            
         });
 
         $data->validate();

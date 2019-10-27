@@ -24,7 +24,12 @@ class TagsTranslations extends Model
     use 
         Uuid,      
         Find;
-       
+    
+    /**
+     * Table name
+     *
+     * @var string
+     */
     protected $table = "tags_translations";
 
     protected $fillable = [
@@ -35,6 +40,11 @@ class TagsTranslations extends Model
    
     public $timestamps = false;
 
+    /**
+     * Tag model relation
+     *
+     * @return mixed
+     */
     public function tag()
     {
         return $this->hasOne(Tags::class,'id'); 

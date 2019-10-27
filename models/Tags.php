@@ -30,11 +30,26 @@ class Tags extends Model
         Find,
         Translations;
 
+    /**
+     * Table name
+     *
+     * @var string
+     */
     protected $table = "tags";
 
-    protected $translation_reference_attribute = 'tags_id';
+    /**
+     * Translation ref column name
+     *
+     * @var string
+     */
+    protected $translationReference = 'tags_id';
 
-    protected $translation_model_class = TagsTranslations::class;
+    /**
+     * Translation model class
+     *
+     * @var string
+     */
+    protected $translationModelClass = TagsTranslations::class;
 
     protected $fillable = [
         'position'      
@@ -67,16 +82,17 @@ class Tags extends Model
      * Return true if tag exist
      *
      * @param string $tag
+     * @param integer $excludeId
      * @return boolean
      */
-    public function hasTag($tag, $exclude_id = null)
+    public function hasTag($tag, $excludeId = null)
     {
         $model = $this->findTag($tag);
         if (is_object($model) == false) {
             return false;
         }
-        if (empty($exclude_id) == false) {
-            return ($model->id == $exclude_id || $model->uuid == $exclude_id) ? false : true;
+        if (empty($excludeId) == false) {
+            return ($model->id == $excludeId || $model->uuid == $excludeId) ? false : true;
         }
         
         return true;        

@@ -5,7 +5,7 @@
     "type": "user",
     "description": "Add, edit, remove tags.",
     "short_description": "Manage tags and tags relations.",
-    "version": "1.0.2",
+    "version": "1.0.3",
     "position": "2",
     "repository": "https://github.com/arikaim/tags-extension.git",
     "admin_menu": {        
