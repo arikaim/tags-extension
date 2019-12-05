@@ -1,12 +1,11 @@
 {
     "title": "Tags",
-    "class": "Tags",
     "name": "tags",
     "package-type": "extension",
     "type": "user",
     "description": "Add, edit, remove tags.",
     "short-description": "Manage tags and tags relations.",
-    "version": "1.0.4",
+    "version": "1.0.5",
     "position": "2",
     "repository": "https://github.com/arikaim/tags-extension.git",
     "admin-menu": {        

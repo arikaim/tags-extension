@@ -5,8 +5,6 @@
  *  @license    http://www.arikaim.com/license
  *  http://www.arikaim.com
  * 
- *  Extension: Tags
- *  Component: tags:admin
  */
 
 function TagsControlPanel() {
@@ -47,6 +45,7 @@ function TagsControlPanel() {
                 });
             }
         }); 
+        arikaim.ui.tab();
     };
 }
 

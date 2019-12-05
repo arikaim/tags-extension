@@ -4,10 +4,13 @@
         id: 'language_button',
         icon: 'globe', 
         active: true,
+        component: 'tags::admin.menu',
+        params: { language: language },
         content: { 
             component: 'components:language.dropdown',
             params: { name: 'language', id: 'choose_language', selected: language, class: 'inline search selection mini' } 
         } 
+
     }
 ] %}
 

@@ -1,3 +1,5 @@
 $(document).ready(function() {
-    tagsView.initRows();
+    safeCall('tagsView',function(obj) {
+        obj.initRows();
+    },true);  
 });

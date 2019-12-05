@@ -5,8 +5,6 @@
  *  @license    http://www.arikaim.com/license
  *  http://www.arikaim.com
  * 
- *  Extension: Tags
- *  Component: tags::admin.view
 */
 
 function TagsView() {
@@ -37,19 +35,19 @@ function TagsView() {
     this.initRows = function() {
 
         var component = arikaim.component.get('tags::admin');
-        var remove_message = component.getProperty('messages.remove.content');
+        var removeMessage = component.getProperty('messages.remove.content');
 
         arikaim.ui.button('.delete-button',function(element) {
             var uuid = $(element).attr('uuid');
             var title = $(element).attr('data-title');
 
-            var message = arikaim.ui.template.render(remove_message,{ title: title });
+            var message = arikaim.ui.template.render(removeMessage,{ title: title });
             modal.confirmDelete({ 
                 title: component.getProperty('messages.remove.title'),
                 description: message
             },function() {
                 tags.delete(uuid,function(result) {
-                    $('#' + uuid).remove();                
+                    arikaim.ui.table.removeRow('#' + uuid);               
                 });
             });
         });
