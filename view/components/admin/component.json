@@ -2,5 +2,10 @@
     "access": {
         "auth": "session",
         "permissions": "ControlPanel:full"           
+    },
+    "icnlude": {
+        "js": [
+            "components:search"
+        ]
     }
 }
