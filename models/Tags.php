@@ -13,12 +13,12 @@ use Illuminate\Database\Eloquent\Model;
 
 use Arikaim\Extensions\Tags\Models\TagsTranslations;
 use Arikaim\Core\Db\Model as DbModel;
+use Arikaim\Core\Utils\Text;
 
 use Arikaim\Core\Db\Traits\Uuid;
 use Arikaim\Core\Db\Traits\Position;
 use Arikaim\Core\Db\Traits\Find;
 use Arikaim\Core\Db\Traits\Translations;
-use Arikaim\Core\Utils\Text;
 
 /**
  * Tags model
@@ -51,10 +51,20 @@ class Tags extends Model
      */
     protected $translationModelClass = TagsTranslations::class;
 
+    /**
+     * Fillable attributes
+     *
+     * @var array
+     */
     protected $fillable = [
         'position'      
     ];
-   
+    
+    /**
+     * Disable timestamps
+     *
+     * @var boolean
+     */
     public $timestamps = false;
     
     /**

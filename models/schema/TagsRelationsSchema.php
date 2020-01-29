@@ -31,7 +31,7 @@ class TagsRelationsSchema extends Schema
      */
     public function create($table) 
     {
-        $table->tablePolymorphicRelations('tags_id','tag',function($table) {
+        $table->tablePolymorphicRelations('tags_id','tags',function($table) {
 
         });       
     }

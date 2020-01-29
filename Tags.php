@@ -19,7 +19,7 @@ class Tags extends Extension
     /**
      * Install extension routes, events, jobs ..
      *
-     * @return boolean
+     * @return void
     */
     public function install()
     {  
@@ -34,21 +34,17 @@ class Tags extends Extension
         $this->createDbTable('TagsRelationsSchema');
         // console
         $this->registerConsoleCommand('TagsDelete');
-        
-        return true;
     }   
 
     /**
      * Uninstall extension
      *
-     * @return boolean
+     * @return void
      */
     public function unInstall()
     {
         $this->dropDbTable('TagsRelationsSchema');
         $this->dropDbTable('TagsTranslationsSchema');
-        $this->dropDbTable('TagsSchema');
-       
-        return true;
+        $this->dropDbTable('TagsSchema');       
     }
 }
