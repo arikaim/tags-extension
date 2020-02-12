@@ -68,6 +68,15 @@ class Tags extends Model
     public $timestamps = false;
     
     /**
+     * Append attributes to serialization
+     *
+     * @var array
+     */
+    protected $appends = [
+        'title'
+    ];
+
+    /**
      * Remove tag, translations and relations
      *
      * @param string|integer $id
@@ -86,6 +95,16 @@ class Tags extends Model
         $model->removeTranslations();
 
         return $model->delete();      
+    }
+
+    /**
+     * Title attribute
+     *
+     * @return string|null
+     */
+    public function getTitleAttribute()
+    {
+        return $this->getTranslationWord();        
     }
 
     /**
@@ -173,5 +192,22 @@ class Tags extends Model
         }
 
         return $result;
+    }
+
+    /**
+     * Get translation title
+     *
+     * @param string|null $language
+     * @param string|null $default
+     * @return string|null
+     */
+    public function getTranslationWord($language = null, $default = null)
+    {
+        $model = $this->translation($language);     
+        if ($model == false) {
+            return $default; 
+        } 
+        
+        return (isset($model->word) == true) ? $model->word : null;
     }
 }

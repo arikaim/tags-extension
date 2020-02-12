@@ -32,12 +32,22 @@ class TagsTranslations extends Model
      */
     protected $table = "tags_translations";
 
+    /**
+     * Fillable attributes
+     *
+     * @var array
+     */
     protected $fillable = [
         'tag_id',
         'word',      
         'language'
     ];
    
+    /**
+     * Disable timestamps
+     *
+     * @var boolean
+     */
     public $timestamps = false;
 
     /**

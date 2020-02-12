@@ -34,12 +34,22 @@ class TagsRelations extends Model
      */
     protected $table = "tags_relations";
 
+    /**
+     * Fillable attributes
+     *
+     * @var array
+     */
     protected $fillable = [
         'tags_id',
         'relation_id',
         'relation_type'       
     ];
-   
+    
+    /**
+     * Disable timestamps
+     *
+     * @var boolean
+     */
     public $timestamps = false;
 
     /**
