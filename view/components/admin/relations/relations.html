@@ -8,14 +8,20 @@
             {% if tags is not empty %}
                 {{ component("tags>tags.label",{ tag: tags.translation(language).word, class: 'basic horizontal', 'icon': 'tag', show_label: false }) }}        
             {% else %}
-                {{ component('tags>tags.dropdown',{ class: ''}) }}
+                {{ component('tags>tags.dropdown',{ class: '' }) }}
             {% endif %}    
         </div>
     </div>    
 </div>
-<div class="mt-8" id="relations_content">
+<div class="mt-8" id="relations_content">   
     {% if uuid is not empty %}
-    {{ component('system:admin.orm.relations',{ extension: 'tags', model: 'TagsRelations' ,id: tags.id }) }}
+    {{  component('system:admin.orm.relations.view',{ 
+            uuid: uuid,
+            extension: 'tags',
+            model: 'TagsRelations' ,
+            id: tags.id 
+        }) 
+    }}
     {% endif %}
 </div>
 {% endcomponent %}

@@ -1,7 +1,7 @@
 {% component 'components:view.rows' %}
     {% set language = language|default(null) %}
     {% set tags = createModel('Tags','tags').getTranslationsQuery(language) %}
-    {{ createSearch('word','tags','like:%{value}%','and') }}
+    {{ createSearch('word','tags','ilike:%{value}%','and') }}
     {% set tags = applySearch(tags,'tags') %}
     {% set items = paginate(tags,'tags') %}
    

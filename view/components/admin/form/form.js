@@ -1,16 +1,6 @@
-/**
- *  Arikaim
- *  
- *  @copyright  Copyright (c) Konstantin Atanasov <info@arikaim.com>
- *  @license    http://www.arikaim.com/license
- *  http://www.arikaim.com
- * 
- *  Extension: Category
- *  Component: category:admin.categories.form
- */
+'use strict';
 
-arikaim.page.onReady(function() {   
- 
+arikaim.page.onReady(function() {    
     arikaim.ui.form.addRules("#tags_form",{
         inline: false,
         fields: {

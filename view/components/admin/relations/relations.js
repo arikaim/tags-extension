@@ -1,3 +1,5 @@
+'use strict';
+
 $(document).ready(function() {
     $('.tags-dropdown').on('change',function(element) {
         var selected = $(this).dropdown('get value');  
@@ -6,8 +8,12 @@ $(document).ready(function() {
         } else {
             arikaim.page.loadContent({
                 id: 'relations_content',
-                component: 'system:admin.orm.relations',
-                params: { extension: 'tags', model: 'TagsRelations', id: selected }
+                component: 'system:admin.orm.relations.view',
+                params: {                   
+                    extension: 'tags',
+                    model: 'TagsRelations',
+                    id: selected 
+                }
             });  
         }            
     });

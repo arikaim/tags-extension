@@ -1,3 +1,5 @@
+'use strict';
+
 $(document).ready(function() {
     arikaim.ui.form.onSubmit("#tags_form",function() {  
         return tags.add('#tags_form');
