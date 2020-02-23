@@ -4,11 +4,15 @@
 {% set size = size|default(15) %}
 {% set tags = createModel('Tags','tags').getTranslationsQuery(language).orderBy('word') %}
 {% set items = tags.take(size).get() %}
+{% set selected_text = (selected is not empty) ? selected : labels.select %}
 
 <div class="ui search clearable selection dropdown tags-dropdown" id="{{ id }}">
     <input name="{{ name }}" type="hidden">
+    {% if icon is not empty %}
+    <i class="icon {{ icon }}"
+    {% endif %}
     <i class="dropdown icon"></i>
-    <div class="default text">{{ labels.select }}</div>
+    <div class="default text">{{ selected_text }}</div>
     <div class="menu">
         {% for item in items %}
         <div class="item" data-value="{{ item.tags_id }}" uuid="{{ item.uuid }}">{{ item.word }}</div>

@@ -52,6 +52,15 @@ class Tags extends Model
     protected $translationModelClass = TagsTranslations::class;
 
     /**
+     * Db column names which are translated to other languages
+     *
+     * @var array
+     */
+    protected $translatedAttributes = [
+        'word'       
+    ];
+
+    /**
      * Fillable attributes
      *
      * @var array
@@ -68,13 +77,16 @@ class Tags extends Model
     public $timestamps = false;
     
     /**
-     * Append attributes to serialization
+     * Get slug from english translation
      *
-     * @var array
+     * @return string
      */
-    protected $appends = [
-        'title'
-    ];
+    public function getSlug($id = null)
+    {
+        $model = (empty($id) == false) ? $this->findByid($id) : $this;
+
+        return $model->translation('en')->word;
+    }
 
     /**
      * Remove tag, translations and relations

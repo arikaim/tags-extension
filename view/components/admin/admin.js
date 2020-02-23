@@ -34,16 +34,7 @@ function TagsControlPanel() {
         });          
     };
 
-    this.init = function() {    
-        $('#choose_language').dropdown({
-            onChange: function(value) {
-                arikaim.page.loadContent({
-                    id: 'tab_content',
-                    component: 'tags::admin.menu',
-                    params: { language: value }
-                });
-            }
-        }); 
+    this.init = function() {           
         arikaim.ui.tab();
     };
 }

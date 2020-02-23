@@ -38,7 +38,7 @@ class TagsTranslations extends Model
      * @var array
      */
     protected $fillable = [
-        'tag_id',
+        'tags_id',
         'word',      
         'language'
     ];

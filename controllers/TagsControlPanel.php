@@ -143,8 +143,8 @@ class TagsControlPanel extends ApiController
                     ->field('results',$items);  
             },'errors.list');
         });
-
         $data->validate();
+
         return $this->getResponse(true);
     }
 }

@@ -1,14 +1,16 @@
 {% component 'components:view.rows' %}
     {% set language = language|default(null) %}
     {% set tags = createModel('Tags','tags').getTranslationsQuery(language) %}
+    {% set tags = tags.join('tags','tags.id','=','tags_translations.tags_id')%}  
+  
     {{ createSearch('word','tags','ilike:%{value}%','and') }}
     {% set tags = applySearch(tags,'tags') %}
     {% set items = paginate(tags,'tags') %}
-   
+    
     {% for item in items.getItems() %}
     <tr id="{{ item.tag.uuid }}">
-        <td>
-            <div class="ui basic mini icon button edit-button" uuid="{{ item.tag.uuid }}" {{ buttons.delete.title|attr('title') }} data-title="{{ item.word }}">
+        <td>           
+            <div class="ui basic mini icon button edit-button" uuid="{{ item.tag.uuid }}" {{ buttons.edit.title|attr('title') }} data-title="{{ item.word }}">
                 <i class="icon edit"></i>                   
             </div>
             <div class="ui basic mini icon button delete-button" uuid="{{ item.tag.uuid }}" {{ buttons.delete.title|attr('title') }} data-title="{{ item.word }}">

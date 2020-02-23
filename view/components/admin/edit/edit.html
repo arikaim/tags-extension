@@ -1,21 +1,36 @@
 {% component 'components:tabs.vertical.content' %}
+{% set language = language|default(null) %}  
 {% if uuid is not empty %}
     {% set tags = createModel('Tags','tags').findById(uuid) %}
 {% endif %}
-<div class="ui equal width form mt-4">
-    <div class="ui mt-4">
-        <div class="field">
-            {% if tags is empty %}      
-                <label>{{ labels.tag }}</label>         
-                {{ component('tags>tags.dropdown',{ class: '' }) }}
-            {% endif %}    
-        </div>
-    </div>    
-</div>
-<div class="mt-8" id="tag_content">
-    {% if uuid is not empty %}
-        {{ component('tags::admin.form',{ uuid: uuid }) }}       
-    {% endif %}
+
+<div class="ui segment mt-4">
+    <div class="field">      
+        <h4>{{ labels.tag }}</h4>         
+        {{  component('tags>tags.dropdown',{ 
+                class: 'fluid',
+                selected: tags.translation(language).word,
+                icon: 'blue tags' 
+            }) 
+        }}        
+    </div>
+</div>    
+<div class="mt-8 {{ (uuid is empty) ? 'hidden' : '' }}" id="tag_content">   
+    <div>
+        <h4>{{ labels.language }}</h4>
+        {{  component('components:language.dropdown',{
+                name: 'language',
+                id: 'choose_language',
+                selected: language,
+                class: 'inline search selection' 
+            })
+        }} 
+    </div>  
+    <div class="mt-4" id="tag_form_content" uuid="{{ uuid }}">
+        {% if uuid is not empty %}
+            {{ component('tags::admin.form',{ uuid: uuid }) }}       
+        {% endif %} 
+    </div>        
 </div>
 
 {% endcomponent %}

@@ -4,6 +4,10 @@
             "content": "Delete",          
             "title": "Delte tag"
         },
+        "edit": {      
+            "content": "Edit",          
+            "title": "Edit tag"
+        },
         "relations": {
             "content": "Relations",          
             "title": "View Relations"

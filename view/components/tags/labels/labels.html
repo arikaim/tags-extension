@@ -1,15 +1,17 @@
-{% set language = language|default(null) %}
+{% set language = language|default(current_language) %}
 {% set max = max|default(15) %}
 {% set per_group = per_group|default(5) %}
-{% set page_url = page_url|default('tags/{{ tag }}') %}
-{% set model = createModel('Tags','tags').getTranslationsQuery(language).orderBy('word','asc').orderBy('id','asc') %}
+{% set page_url = page_url|default('tags/{{ slug }}') %}
+{% set model = createModel('Tags','tags') %}
+{% set tags = model.getTranslationsQuery(language).orderBy('word','asc').orderBy('id','asc') %}
+
 {% if max is not empty %}
-    {% set model = model.take(max) %}
+    {% set tags = tags.take(max) %}
 {% endif %}
 
-{% for item in model.get() %}
-{% set url = page_url|renderText({ slug: item.word }) %}
-<div class="{{ class }}">
-    <a class="ui label {{ label_class }}" href="{{ url(url) }}">{{ item.word }}</a>
+{% for item in tags.get() %}
+{% set url = page_url|renderText({ slug: model.getSlug(item.tags_id) }) %}
+<div class="{{ class }}">   
+    <a class="ui label {{ label_class }}" href="{{ url(url,false,language) }}">{{ item.word }}</a>
 </div>
 {% endfor %}

@@ -4,6 +4,7 @@
         "icon": "edit"
     },
     "labels": {
-        "tag": "Tag"
+        "tag": "Select Tag",
+        "language": "Language"
     }
 }

@@ -1,11 +1,11 @@
-{% set language = language|default(null) %}
+{% set language = language|default(current_language) %}
 {% set max = max|default(10) %}
 {% set model = createModel('Tags','tags').orderBy('position','asc').orderBy('id','asc') %}
 {% set items = model.take(max).get() %}
 {% set page_url = page_url|default('{{ slug }}') %}
 
 {% for item in items %}       
-    {% set url = page_url|renderText({ slug: item.translation(language).word }) %}
+    {% set url = page_url|renderText({ slug: item.getSlug() }) %}
     <div class="item {{ item_class }}">      
         <a href="{{ url(url,true) }}">        
             <span class="{{ item_text_class }}">{{ item.translation(language).word }}</span>
