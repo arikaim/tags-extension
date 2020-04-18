@@ -28,12 +28,12 @@ class TagsControlPanel extends ApiController
     }
 
     /**
-     * Add new tag(s)
+     *  Add new tag(s)
      *
-     * @param object $request
-     * @param object $response
-     * @param object $data
-     * @return object
+     * @param \Psr\Http\Message\ServerRequestInterface $request
+     * @param \Psr\Http\Message\ResponseInterface $response
+     * @param Validator $data
+     * @return Psr\Http\Message\ResponseInterface
     */
     public function addController($request, $response, $data) 
     {       
@@ -61,10 +61,10 @@ class TagsControlPanel extends ApiController
     /**
      * Update tag
      *
-     * @param object $request
-     * @param object $response
-     * @param object $data
-     * @return object
+     * @param \Psr\Http\Message\ServerRequestInterface $request
+     * @param \Psr\Http\Message\ResponseInterface $response
+     * @param Validator $data
+     * @return Psr\Http\Message\ResponseInterface
     */
     public function updateController($request, $response, $data) 
     {       
@@ -88,14 +88,14 @@ class TagsControlPanel extends ApiController
             ->addRule('text:min=2','tags')           
             ->validate();       
     }
-
+   
     /**
      * Delete tag(s)
      *
-     * @param object $request
-     * @param object $response
-     * @param object $data
-     * @return object
+     * @param \Psr\Http\Message\ServerRequestInterface $request
+     * @param \Psr\Http\Message\ResponseInterface $response
+     * @param Validator $data
+     * @return Psr\Http\Message\ResponseInterface
     */
     public function deleteController($request, $response, $data)
     { 
@@ -117,10 +117,10 @@ class TagsControlPanel extends ApiController
     /**
      * Get tag list
      *
-     * @param object $request
-     * @param object $response
+     * @param \Psr\Http\Message\ServerRequestInterface $request
+     * @param \Psr\Http\Message\ResponseInterface $response
      * @param Validator $data
-     * @return object
+     * @return Psr\Http\Message\ResponseInterface
     */
     public function getList($request, $response, $data)
     {
