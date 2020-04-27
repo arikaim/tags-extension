@@ -10,8 +10,11 @@
 {% endif %}
 
 {% for item in tags.get() %}
-{% set url = page_url|renderText({ slug: model.getSlug(item.tags_id) }) %}
-<div class="{{ class }}">   
-    <a class="ui label {{ label_class }}" href="{{ url(url,false,language) }}">{{ item.word }}</a>
-</div>
+    {% set slug = model.getSlug(item.tags_id) %}
+    {% if slug is not empty %}
+        {% set url = page_url|renderText({ slug: slug }) %}
+        <div class="{{ class }}">   
+            <a class="ui label {{ label_class }}" href="{{ url(url,false,language) }}">{{ item.word }}</a>
+        </div>
+    {% endif %}
 {% endfor %}

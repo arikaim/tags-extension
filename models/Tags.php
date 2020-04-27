@@ -84,8 +84,9 @@ class Tags extends Model
     public function getSlug($id = null)
     {
         $model = (empty($id) == false) ? $this->findByid($id) : $this;
+        $translateion = $model->translation('en');
 
-        return $model->translation('en')->word;
+        return (is_object($translateion) == true) ? $translateion->word : null; 
     }
 
     /**
@@ -216,7 +217,7 @@ class Tags extends Model
     public function getTranslationWord($language = null, $default = null)
     {
         $model = $this->translation($language);     
-        if ($model == false) {
+        if (is_object($model) == false) {
             return $default; 
         } 
         
