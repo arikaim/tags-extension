@@ -67,15 +67,18 @@ class TranslateTagsJob extends CronJob implements RecuringJobInterface,JobInterf
         $tags = $model->where('id','>',$lastId)->take($maxTranslations)->get();
         foreach ($tags as $tag) {          
             $translation = $tag->translation($language);
-            if ($translation == false) {
+            if ($translation === false) {
                 // get English translation
                 $defaultTranslation = $tag->translation('en');
-                if ($defaultTranslation !== false) {
+                if ($defaultTranslation !== false) { 
                     $translatedFields = $transalte->translateFields('word',$defaultTranslation->toArray(),$language);
-                    if ($defaultTranslation->word != $translatedFields['word']) {
-                        $tag->saveTranslation($translatedFields,$language);
-                        $createdTranslations++;                      
-                    }                  
+
+                    if ($model->hasTag($translatedFields['word']) == false) {
+                        if ($defaultTranslation->word != $translatedFields['word']) {
+                            $tag->saveTranslation($translatedFields,$language);
+                            $createdTranslations++;                      
+                        }     
+                    }              
                 }
             }
         }
