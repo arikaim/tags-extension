@@ -46,9 +46,8 @@ class TranslateTags extends ConsoleCommand
         }
 
         $job = Arikaim::queue()->create("translateTags");
-        $result = $job->execute();
-        echo "res:" . $result;
-        
+        $job->execute();
+     
         $this->showCompleted();
     }
 }

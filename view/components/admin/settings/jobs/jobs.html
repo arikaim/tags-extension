@@ -1,6 +1,7 @@
 {% component 'components:tabs.vertical.content' %}
 {% set job = service('queue').getJob('translateTags') %}
 {% set to_language = getOption('tags.job.translate.language') %}
+{% set current_tag_id = getOption('tags.job.translate.last.id',0) %}
 {% if hasExtension('translations') == true %}
     <form class="ui form mt-10" id="job_settings_form" method="POST">        
         <div class="field">      
@@ -10,14 +11,22 @@
                 <span class="ml-16 pl-1 text-gray-700">{{ descriptions.translate }}</span>
             </div>  
             <div class="mt-4 {{ job.status|ifthen(0,'invisible') }}" id="job_settings">  
-                <h4>{{ labels.to }}</h4>
-                {{  component('components:language.dropdown',{
-                        name: 'language', 
-                        id: 'choose_language', 
-                        selected: to_language, 
-                        class: 'inline search selection' 
-                    }) 
-                }}                    
+                <div class="fields">
+                    <div class="field">
+                        <label>{{ labels.to }}</label>
+                        {{  component('components:language.dropdown',{
+                                name: 'language', 
+                                id: 'choose_language', 
+                                selected: to_language, 
+                                class: 'inline search selection' 
+                            }) 
+                        }}    
+                    </div>
+                    <div class="field">
+                        <label>{{ labels.last }}</label>
+                        <input type="text" readonly="" disabled="" tabindex="-1" value="{{ current_tag_id }}">                        
+                    </div>
+                </div>                              
                 <div class="ui basic accordion mt-2" id="translate_tags_job">                                                      
                     {{ component('system:admin.jobs.job',{ job: job }) }}                     
                 </div>                    
