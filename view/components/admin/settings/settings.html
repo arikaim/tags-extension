@@ -1,0 +1,11 @@
+{% set items = [ 
+    { title: labels.jobs, component: 'tags::admin.settings.jobs', icon: 'redo alternate', active: true }    
+] %}
+
+{{  component('components:tabs.vertical',{ 
+        items: items, 
+        menu: { id: 'settings_menu' }, 
+        item_class: 'settings-item',
+        content: { id: 'settings_content', component: 'tags::admin.settings.jobs' } 
+    })
+}}

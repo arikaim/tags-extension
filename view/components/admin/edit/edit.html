@@ -1,5 +1,5 @@
 {% component 'components:tabs.vertical.content' %}
-{% set language = language|default(null) %}  
+{% set language = language|default(current_language) %}  
 {% if uuid is not empty %}
     {% set tags = createModel('Tags','tags').findById(uuid) %}
 {% endif %}
@@ -25,6 +25,19 @@
                 class: 'inline search selection' 
             })
         }} 
+        {% if hasExtension('translations') == true %}
+            {{  component('translations::admin.translate.button',{
+                    model: 'Tags',
+                    extension: 'tags', 
+                    language: language,
+                    uuid: uuid,
+                    icon: 'language blue',
+                    class: 'basic right floated',
+                    callback: 'applyTranslation',
+                    fields: 'word'                
+                }) 
+            }}       
+        {% endif %}  
     </div>  
     <div class="mt-4" id="tag_form_content" uuid="{{ uuid }}">
         {% if uuid is not empty %}

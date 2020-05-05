@@ -1,7 +1,8 @@
 {% set language = getLanguage() %}
 
 {% set items = [
-    { id: 'language_button',icon: 'list',active: true,component: 'tags::admin.menu',title: labels.view }
+    { id: 'tags_tab',icon: 'list',active: true,component: 'tags::admin.menu',title: labels.view },
+    { id: 'settings_tab',icon: 'cogs',component: 'tags::admin.settings',title: labels.settings }
 ] %}
 
 {{  component('components:tabs',{ 

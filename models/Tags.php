@@ -160,6 +160,8 @@ class Tags extends Model
      */
     public function createTag($tag, $language = null)
     {       
+        $language = (empty($language) == true) ? 'en' : $language;
+        
         if (empty($tag) == true) {
             return false;
         }
@@ -181,6 +183,7 @@ class Tags extends Model
      */
     public function add($tag, $language = null)
     {
+        $language = (empty($language) == true) ? 'en' : $language;
         if (empty($tag) == true) {
             return false;
         }
@@ -216,6 +219,8 @@ class Tags extends Model
      */
     public function getTranslationWord($language = null, $default = null)
     {
+        $language = (empty($language) == true) ? 'en' : $language;
+
         $model = $this->translation($language);     
         if (is_object($model) == false) {
             return $default; 

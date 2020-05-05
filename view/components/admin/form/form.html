@@ -1,7 +1,7 @@
 {% if uuid is not empty %}
     {% set tags = createModel('Tags','tags').findById(uuid) %} 
 {% endif %}
-{% set language = language|default(getLanguage()) %}  
+{% set language = language|default(current_language) %}  
 
 <form class="ui equal width form" id="tags_form">  
     <input type="hidden" name="uuid" id="uuid" value="{{ uuid }}">  

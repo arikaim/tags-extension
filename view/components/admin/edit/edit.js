@@ -1,9 +1,16 @@
 'use strict';
 
+function applyTranslation(result) {
+    $('#tags').val(result.fields['word']);
+}
+
 $(document).ready(function() {
+
     $('#choose_language').dropdown({
         onChange: function(value) {
             var uuid = $('#tag_form_content').attr('uuid');
+            $('.translate-button').attr('language',value);
+
             arikaim.page.loadContent({
                 id: 'tag_form_content',
                 component: 'tags::admin.form',

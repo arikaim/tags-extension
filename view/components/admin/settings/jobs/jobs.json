@@ -1,0 +1,15 @@
+{
+    "title": {
+        "content": "Jobs",
+        "icon": "redo alternate"
+    },
+    "labels": {
+        "translate": "Translate Job",
+        "to": "Translate To",
+        "alert": "Alert",
+        "error": "Translations extension not installed!"
+    },
+    "descriptions": {
+        "translate": "Automated tags language translation"
+    }
+}

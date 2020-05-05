@@ -1,0 +1,33 @@
+{% component 'components:tabs.vertical.content' %}
+{% set job = service('queue').getJob('translateTags') %}
+{% set to_language = getOption('tags.job.translate.language') %}
+{% if hasExtension('translations') == true %}
+    <form class="ui form mt-10" id="job_settings_form" method="POST">        
+        <div class="field">      
+            <div class="ui toggle checkbox" id="translate_tags_toggle">
+                <input type="checkbox" {{ job.status|ifthen(1,'checked') }} uuid="{{ job.uuid }}" value="1">
+                <label class="font-bold">{{ labels.translate }}</label>
+                <span class="ml-16 pl-1 text-gray-700">{{ descriptions.translate }}</span>
+            </div>  
+            <div class="mt-4 {{ job.status|ifthen(0,'invisible') }}" id="job_settings">  
+                <h4>{{ labels.to }}</h4>
+                {{  component('components:language.dropdown',{
+                        name: 'language', 
+                        id: 'choose_language', 
+                        selected: to_language, 
+                        class: 'inline search selection' 
+                    }) 
+                }}                    
+                <div class="ui basic accordion mt-2" id="translate_tags_job">                                                      
+                    {{ component('system:admin.jobs.job',{ job: job }) }}                     
+                </div>                    
+            </div>            
+        </div>
+    </form>  
+{% else %}
+    <div class="ui message error">     
+        <h4>{{ labels.alert }}</h4>   
+        <p>{{ labels.error }}</p>         
+    </div>
+{% endif %}
+{% endcomponent %}

@@ -32,8 +32,14 @@ class Tags extends Extension
         $this->createDbTable('TagsSchema');
         $this->createDbTable('TagsTranslationsSchema');
         $this->createDbTable('TagsRelationsSchema');
-        // console
+        // Console
         $this->registerConsoleCommand('TagsDelete');
+        $this->registerConsoleCommand('TranslateTags');
+        // Jobs
+        $this->addJob("TranslateTagsJob",'translateTags');
+        // Options
+        $this->createOption('tags.job.translate.language',null);
+        $this->createOption('tags.job.translate.last.id',0);       
     }   
 
     /**
