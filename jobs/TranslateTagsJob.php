@@ -33,7 +33,7 @@ class TranslateTagsJob extends CronJob implements RecuringJobInterface,JobInterf
     {
         parent::__construct($extension,$name,$priority);
         
-        $this->runEveryMinute(5);
+        $this->runEveryMinute(10);
     }
 
     /**
@@ -49,7 +49,7 @@ class TranslateTagsJob extends CronJob implements RecuringJobInterface,JobInterf
             return false;
         }
 
-        $lastId = Arikaim::options()->get('tags.job.translate.last.id',0);
+        $lastId = (int)Arikaim::options()->get('tags.job.translate.last.id',0);
         if ($lastId >= $model->latest('id')->first()->id) {
             // reset last Id
             Arikaim::options()->set('tags.job.translate.last.id',0);
@@ -63,12 +63,12 @@ class TranslateTagsJob extends CronJob implements RecuringJobInterface,JobInterf
         $maxTranslations = 10;
         $createdTranslations = 0;
         $transalte = Factory::createController(Arikaim::getContainer(),'TranslationsControlPanel','translations');
-      
+    
         $tags = $model->where('id','>',$lastId)->take($maxTranslations)->get();
         foreach ($tags as $tag) {          
             $translation = $tag->translation($language);
             if ($translation === false) {
-                // get English translation
+                // get english translation
                 $defaultTranslation = $tag->translation('en');
                 if ($defaultTranslation !== false) { 
                     $translatedFields = $transalte->translateFields('word',$defaultTranslation->toArray(),$language);
@@ -82,6 +82,7 @@ class TranslateTagsJob extends CronJob implements RecuringJobInterface,JobInterf
                 }
             }
         }
+
         Arikaim::options()->set('tags.job.translate.last.id',$tag->id);
         Arikaim::logger()->info("Translated $createdTranslations tags to language '" . $language . "'.");  
 
