@@ -56,8 +56,7 @@ class Tags extends Model
      *
      * @var array
      */
-    protected $translatedAttributes = [
-        'word'       
+    protected $translatedAttributes = [          
     ];
 
     /**
