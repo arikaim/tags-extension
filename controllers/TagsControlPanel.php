@@ -133,7 +133,7 @@ class TagsControlPanel extends ApiController
             $query = Model::Tags('tags')->getTranslationsQuery($language);
             $model = $query->where('word','like',"%$search%")->take($size)->get();
 
-            $this->setResponse(is_object($model),function() use($model) {     
+            $this->setResponse(\is_object($model),function() use($model) {     
                 $items = [];
                 foreach ($model as $item) {
                     $items[]= ['name' => $item['word'],'value' => $item['tags_id']];

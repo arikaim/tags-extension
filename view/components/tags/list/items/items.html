@@ -1,8 +1,15 @@
 {% set language = language|default(current_language) %}
 {% set max = max|default(10) %}
-{% set model = createModel('Tags','tags').orderBy('position','asc').orderBy('id','asc') %}
-{% set items = model.take(max).get() %}
 {% set page_url = page_url|default('{{ slug }}') %}
+{% set tags = createModel('Tags','tags'). %}
+
+{% if random == true %}
+    {% set tags = tags.orderByRaw('RAND()') %}
+{% else %}
+    {% set tags = tags.orderBy('position','asc').orderBy('id','asc') %}
+{% endif %}
+
+{% set items = tags.take(max).get() %}
 
 {% for item in items %}       
     {% set url = page_url|renderText({ slug: item.getSlug() }) %}

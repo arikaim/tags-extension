@@ -85,7 +85,7 @@ class Tags extends Model
         $model = (empty($id) == false) ? $this->findByid($id) : $this;
         $translateion = $model->translation('en');
 
-        return (is_object($translateion) == true) ? $translateion->word : null; 
+        return (\is_object($translateion) == true) ? $translateion->word : null; 
     }
 
     /**
@@ -97,7 +97,7 @@ class Tags extends Model
     public function remove($id)
     {
         $model = $this->findById($id);
-        if (is_object($model) == false) {
+        if (\is_object($model) == false) {
             return false;
         }    
 
@@ -129,7 +129,7 @@ class Tags extends Model
     public function hasTag($tag, $excludeId = null)
     {
         $model = $this->findTag($tag);
-        if (is_object($model) == false) {
+        if (\is_object($model) == false) {
             return false;
         }
         if (empty($excludeId) == false) {
@@ -165,7 +165,7 @@ class Tags extends Model
             return false;
         }
         $model = $this->findTag($tag);
-        if (is_object($model) == false) {               
+        if (\is_object($model) == false) {               
             $model = $this->create();
             $model->saveTranslation(['word' => $tag],$language,$model->id);          
         }
@@ -221,7 +221,7 @@ class Tags extends Model
         $language = (empty($language) == true) ? 'en' : $language;
 
         $model = $this->translation($language);     
-        if (is_object($model) == false) {
+        if (\is_object($model) == false) {
             return $default; 
         } 
         

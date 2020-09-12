@@ -3,7 +3,13 @@
 {% set per_group = per_group|default(5) %}
 {% set page_url = page_url|default('tags/{{ slug }}') %}
 {% set model = createModel('Tags','tags') %}
-{% set tags = model.getTranslationsQuery(language).orderBy('word','asc').orderBy('id','asc') %}
+{% set tags = model.getTranslationsQuery(language) %}
+
+{% if random == true %}
+    {% set tags = tags.orderByRaw('RAND()') %}
+{% else %}
+    {% set tags = tags.orderBy('word','asc').orderBy('id','asc') %}
+{% endif %}
 
 {% if max is not empty %}
     {% set tags = tags.take(max) %}
