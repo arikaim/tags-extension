@@ -1,7 +1,7 @@
 {% set language = language|default(current_language) %}
 {% set max = max|default(10) %}
 {% set page_url = page_url|default('{{ slug }}') %}
-{% set tags = createModel('Tags','tags'). %}
+{% set tags = createModel('Tags','tags') %}
 
 {% if random == true %}
     {% set tags = tags.orderByRaw('RAND()') %}
