@@ -6,9 +6,9 @@
     <div class="ui mt-4">
         <div class="field">
             {% if tags is not empty %}
-                {{ component("tags>tags.label",{ tag: tags.translation(language).word, class: 'basic horizontal', 'icon': 'tag', show_label: false }) }}        
+                {{ component("tags::tags.label",{ tag: tags.translation(language).word, class: 'basic horizontal', 'icon': 'tag', show_label: false }) }}        
             {% else %}
-                {{ component('tags>tags.dropdown',{ class: '' }) }}
+                {{ component('tags::tags.dropdown',{ class: '' }) }}
             {% endif %}    
         </div>
     </div>    

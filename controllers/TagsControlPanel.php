@@ -10,12 +10,12 @@
 namespace Arikaim\Extensions\Tags\Controllers;
 
 use Arikaim\Core\Db\Model;
-use Arikaim\Core\Controllers\ApiController;
+use Arikaim\Core\Controllers\ControlPanelApiController;
 
 /**
  * Tags control panel controler
 */
-class TagsControlPanel extends ApiController
+class TagsControlPanel extends ControlPanelApiController
 {
     /**
      * Init controller
@@ -36,9 +36,7 @@ class TagsControlPanel extends ApiController
      * @return Psr\Http\Message\ResponseInterface
     */
     public function addController($request, $response, $data) 
-    {       
-        $this->requireControlPanelPermission();
-        
+    {        
         $this->onDataValid(function($data) {
             $language = $data->get('language',null);
             $tags = $data->get('tags',null);
@@ -67,9 +65,7 @@ class TagsControlPanel extends ApiController
      * @return Psr\Http\Message\ResponseInterface
     */
     public function updateController($request, $response, $data) 
-    {       
-        $this->requireControlPanelPermission();
-        
+    {        
         $this->onDataValid(function($data) {
             $language = $data->get('language',null);
             $tags = $data->get('tags',null);
@@ -99,8 +95,6 @@ class TagsControlPanel extends ApiController
     */
     public function deleteController($request, $response, $data)
     { 
-        $this->requireControlPanelPermission();
-
         $this->onDataValid(function($data) {
             $uuid = $data->get('uuid');
             $result = Model::Tags('tags')->remove($uuid);
@@ -124,14 +118,12 @@ class TagsControlPanel extends ApiController
     */
     public function getList($request, $response, $data)
     {
-        $this->requireControlPanelPermission();
-
         $this->onDataValid(function($data) {
             $language = $data->get('language',null);
             $search = $data->get('query','');
             $size = $data->get('size',15);
             $query = Model::Tags('tags')->getTranslationsQuery($language);
-            $model = $query->where('word','like',"%$search%")->take($size)->get();
+            $model = $query->where('word','like','%' . $search . '%')->take($size)->get();
 
             $this->setResponse(\is_object($model),function() use($model) {     
                 $items = [];

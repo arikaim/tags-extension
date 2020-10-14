@@ -32,7 +32,7 @@ class TagsRelations extends Model
      *
      * @var string
      */
-    protected $table = "tags_relations";
+    protected $table = 'tags_relations';
 
     /**
      * Fillable attributes
@@ -69,7 +69,7 @@ class TagsRelations extends Model
     /**
      * Tag model relation
      *
-     * @return void
+     * @return Relation
      */
     public function tag()
     {

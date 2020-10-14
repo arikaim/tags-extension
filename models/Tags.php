@@ -35,7 +35,7 @@ class Tags extends Model
      *
      * @var string
      */
-    protected $table = "tags";
+    protected $table = 'tags';
 
     /**
      * Translation ref column name

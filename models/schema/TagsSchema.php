@@ -21,7 +21,7 @@ class TagsSchema extends Schema
      *
      * @var string
      */
-    protected $tableName = "tags";
+    protected $tableName = 'tags';
 
    /**
      * Create table

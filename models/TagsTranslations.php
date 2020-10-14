@@ -30,7 +30,7 @@ class TagsTranslations extends Model
      *
      * @var string
      */
-    protected $table = "tags_translations";
+    protected $table = 'tags_translations';
 
     /**
      * Fillable attributes
