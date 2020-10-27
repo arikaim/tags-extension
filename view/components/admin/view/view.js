@@ -23,8 +23,10 @@ function TagsView() {
             event: 'tags.search.load'
         },'tags')  
 
-        arikaim.events.on('tags.search.load',function(result) {      
-            paginator.reload();
+        arikaim.events.on('tags.search.load',function(result) {                 
+            paginator.setPage(1,'tags',function(result) {
+                paginator.reload();
+            });
             self.initRows();    
         },'tagsSearch');
 

@@ -1,15 +1,15 @@
 {% set id = id|default('tags_dropdown') %}
 {% set name = name|default('tags') %}
-{% set language = language|default(null) %}
+{% set language = language|default(current_language) %}
 {% set size = size|default(15) %}
 {% set tags = createModel('Tags','tags').getTranslationsQuery(language).orderBy('word') %}
 {% set items = tags.take(size).get() %}
 {% set selected_text = (selected is not empty) ? selected : labels.select %}
-
-<div class="ui search clearable selection dropdown tags-dropdown" id="{{ id }}">
+{% set class = class|default('labeled clearable') %}
+<div class="ui search selection dropdown tags-dropdown {{ class }}" id="{{ id }}">
     <input name="{{ name }}" type="hidden">
     {% if icon is not empty %}
-    <i class="icon {{ icon }}"
+    <i class="icon {{ icon }}"></i>
     {% endif %}
     <i class="dropdown icon"></i>
     <div class="default text">{{ selected_text }}</div>

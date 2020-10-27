@@ -1,6 +1,7 @@
 {% component 'components:tabs.vertical.content' %}
 {% set class = 'sixteen wide column' %}
 {% set panel_class = 'basic' %}
+{% set language = language|default(current_language) %}
 <div class="ui stackable grid">
     <div class="sixteen wide column mt-10">           
         {{ component("components:search",{ namespace: 'tags' }) }}
@@ -23,7 +24,7 @@
         {{ component('tags::admin.view.rows',{ language: language }) }}   
     </tbody>  
 </table>
-<div class="mt-2">
+<div class="mt-2" id="paginator">
     {{ component('components:paginator',{ namespace: 'tags' }) }}
 </div>
 {% endcomponent %}

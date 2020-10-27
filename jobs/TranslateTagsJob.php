@@ -84,8 +84,7 @@ class TranslateTagsJob extends CronJob implements RecuringJobInterface,JobInterf
         }
 
         Arikaim::options()->set('tags.job.translate.last.id',$tag->id);
-        Arikaim::logger()->info("Translated $createdTranslations tags to language '" . $language . "'.");  
-
+      
         return $createdTranslations;
     }
 }

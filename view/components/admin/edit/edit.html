@@ -9,8 +9,9 @@
         <h4>{{ labels.tag }}</h4>         
         {{  component('tags::tags.dropdown',{ 
                 class: 'fluid',
+                language: language,
                 selected: tags.translation(language).word,
-                icon: 'blue tags' 
+                icon: '' 
             }) 
         }}        
     </div>

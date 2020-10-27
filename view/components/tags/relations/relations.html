@@ -1,4 +1,4 @@
-{% set language = language|default(null) %}
+{% set language = language|default(current_language) %}
 {% set model = createModel('TagsRelations','tags') %}
 {% set items = model.getRelationsQuery(relation_id) %}
 
