@@ -159,12 +159,9 @@ class Tags extends Model
      */
     public function createTag($tag, $language = null)
     {       
-        $language = (empty($language) == true) ? 'en' : $language;
-        
-        if (empty($tag) == true) {
-            return false;
-        }
+        $language = $language ?? 'en';
         $model = $this->findTag($tag);
+
         if (\is_object($model) == false) {               
             $model = $this->create();
             $model->saveTranslation(['word' => $tag],$language,$model->id);          
@@ -201,9 +198,11 @@ class Tags extends Model
     public function addTags(array $tags, $language = null)
     {
         $result = [];
-        foreach ($tags as $tag) {                    
-            $model = $this->createTag($tag,$language);
-            $result[] = $model->id;                                     
+        foreach ($tags as $tag) {  
+            if (empty($tag) == false) {                          
+                $model = $this->createTag($tag,$language);
+                $result[] = $model->id;   
+            }                                     
         }
 
         return $result;
