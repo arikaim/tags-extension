@@ -14,6 +14,7 @@ use Illuminate\Database\Eloquent\Model;
 use Arikaim\Extensions\Tags\Models\TagsTranslations;
 use Arikaim\Core\Db\Model as DbModel;
 use Arikaim\Core\Utils\Text;
+use Arikaim\Core\Utils\Utils;
 
 use Arikaim\Core\Db\Traits\Uuid;
 use Arikaim\Core\Db\Traits\Position;
@@ -78,14 +79,18 @@ class Tags extends Model
     /**
      * Get slug from english translation
      *
+     * @param string|null $language
      * @return string
      */
-    public function getSlug($id = null)
+    public function getSlug($id = null, $language = null)
     {
-        $model = (empty($id) == false) ? $this->findByid($id) : $this;
-        $translateion = $model->translation('en');
+        $language = $language ?? $this->getCurrentLanguage();
 
-        return (\is_object($translateion) == true) ? $translateion->word : null; 
+        $model = (empty($id) == false) ? $this->findByid($id) : $this;
+        $translation = $model->translation($language);
+        $translation = (\is_object($translation) == true) ? $translation : $model->translation('en'); 
+
+        return Utils::slug($translation->word);
     }
 
     /**
@@ -163,11 +168,15 @@ class Tags extends Model
         $model = $this->findTag($tag);
 
         if (\is_object($model) == false) {               
-            $model = $this->create();
-            $model->saveTranslation(['word' => $tag],$language,$model->id);          
+            $model = $this->create([]);
+            if (\is_object($model) == true) {
+                $model->saveTranslation(['word' => $tag],$language,$model->id); 
+                return $model;    
+            }
+            return false;
         }
       
-        return $model;
+        return $this->findById($model->tags_id);
     }
 
     /**
@@ -201,7 +210,9 @@ class Tags extends Model
         foreach ($tags as $tag) {  
             if (empty($tag) == false) {                          
                 $model = $this->createTag($tag,$language);
-                $result[] = $model->id;   
+                if (\is_object($model) == true) {
+                    $result[] = $model->id;
+                }                 
             }                                     
         }
 

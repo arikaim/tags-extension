@@ -16,7 +16,7 @@
 {% endif %}
 
 {% for item in tags.get() %}
-    {% set slug = model.getSlug(item.tags_id) %}
+    {% set slug = model.getSlug(item.tags_id,language) %}
     {% if slug is not empty %}
         {% set url = page_url|renderText({ slug: slug }) %}
         <div class="{{ class }}">   

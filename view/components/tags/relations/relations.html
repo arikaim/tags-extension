@@ -1,7 +1,9 @@
 {% set language = language|default(current_language) %}
 {% set model = createModel('TagsRelations','tags') %}
 {% set items = model.getRelationsQuery(relation_id) %}
-
+{% if limit is not empty %}
+    {% set items = items.take(limit) %}
+{% endif %}
 {% for item in items.get() %}   
     <div class="ui label {{ class }}">
         {{ item.tag.translation(language).word }}       
