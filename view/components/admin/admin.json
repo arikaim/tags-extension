@@ -1,10 +1,4 @@
-{
-    "messages": {
-        "remove": {
-            "title": "Confirm Remove",
-            "content": "Confirm remove tag '<b><% title %></b>'"
-        }
-    },
+{   
     "labels": {
         "view": "View",
         "settings": "Settings"

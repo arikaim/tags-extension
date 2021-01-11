@@ -7,5 +7,11 @@
         "tag": "Tag",
         "relations": "Relations",
         "actions": "Actions"
+    },
+    "messages": {
+        "remove": {
+            "title": "Confirm Remove",
+            "content": "Confirm remove tag '<b><% title %></b>'"
+        }
     }   
 }

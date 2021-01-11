@@ -8,9 +8,22 @@
 
 function TagsView() {
     var self = this;
+    this.messages = null;
+
+    this.loadMessages = function() {
+        if (isObject(this.messages) == true) {
+            return;
+        }
+
+        arikaim.component.loadProperties('tags::admin.view',function(params) { 
+            self.messages = params.messages;
+        }); 
+    };
 
     this.init = function() {
         var language = $('#tags_rows').attr('language');
+
+        this.loadMessages();
 
         paginator.init('tags_rows',{
             name: 'tags::admin.view.rows',
@@ -35,16 +48,13 @@ function TagsView() {
 
     this.initRows = function() {
 
-        var component = arikaim.component.get('tags::admin');
-        var removeMessage = component.getProperty('messages.remove.content');
-
         arikaim.ui.button('.delete-button',function(element) {
             var uuid = $(element).attr('uuid');
             var title = $(element).attr('data-title');
-
-            var message = arikaim.ui.template.render(removeMessage,{ title: title });
+            
+            var message = arikaim.ui.template.render(self.messages.remove.content,{ title: title });
             modal.confirmDelete({ 
-                title: component.getProperty('messages.remove.title'),
+                title: self.messages.remove.title,
                 description: message
             },function() {
                 tags.delete(uuid,function(result) {
@@ -79,6 +89,7 @@ function TagsView() {
 
 var tagsView = new TagsView();
 
-arikaim.page.onReady(function() {
+$(document).ready(function() {
     tagsView.init();   
+    tagsView.initRows();
 });

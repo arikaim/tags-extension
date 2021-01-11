@@ -1,15 +1,12 @@
-{% component 'components:tabs.vertical.content' %}
-{% set class = 'sixteen wide column' %}
-{% set panel_class = 'basic' %}
 {% set language = language|default(current_language) %}
-<div class="ui stackable grid">
-    <div class="sixteen wide column mt-10">           
-        {{ component("components:search",{ namespace: 'tags' }) }}
-    </div>
-</div>
-<div class="ui stackable text menu">
-    <div class="item right floated">       
-        {{ component('components:paginator.dropdown',{ namespace: 'tags' }) }}
+<div class="ui segment">
+    <div class="ui stackable grid">
+        <div class="seven wide column">           
+            {{ component("components:search.form",{ namespace: 'tags' }) }}
+        </div>
+        <div class="one wide column right floated">       
+            {{ component('components:paginator.dropdown',{ namespace: 'tags' }) }}
+        </div>
     </div>
 </div>
 <table class="ui compact stackable borderless basic table mt-2">
@@ -27,4 +24,3 @@
 <div class="mt-2" id="paginator">
     {{ component('components:paginator',{ namespace: 'tags' }) }}
 </div>
-{% endcomponent %}
