@@ -42,9 +42,9 @@ class TagsControlPanel extends ControlPanelApiController
             $tags = $data->get('tags',null);
 
             $model = Model::Tags('tags');                
-            $result = $model->add($tags,$language);
- 
-            $this->setResponse($result,function() use($result,$language) {                                
+            $createdTags = $model->add($tags,$language);
+            $result = (\is_array($createdTags) == true) ?  \count($createdTags) : false; 
+            $this->setResponse(($result > 0),function() use($result,$language) {                                
                 $this
                     ->message('add')
                     ->field('tags',$result)
@@ -73,7 +73,7 @@ class TagsControlPanel extends ControlPanelApiController
             $model = Model::Tags('tags');                       
             $result = $model->saveTranslation(['word' => $tags],$language,$data['uuid']);
 
-            $this->setResponse($result,function() use($language,$model) {                                
+            $this->setResponse((bool)$result,function() use($language,$model) {                                
                 $this
                     ->message('update')
                     ->field('uuid',$model->uuid)
@@ -99,7 +99,7 @@ class TagsControlPanel extends ControlPanelApiController
             $uuid = $data->get('uuid');
             $result = Model::Tags('tags')->remove($uuid);
 
-            $this->setResponse($result,function() use($uuid) {            
+            $this->setResponse((bool)$result,function() use($uuid) {            
                 $this
                     ->message('delete')
                     ->field('uuid',$uuid);  

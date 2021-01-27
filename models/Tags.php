@@ -77,18 +77,31 @@ class Tags extends Model
     public $timestamps = false;
     
     /**
+     * word attribute
+     *
+     * @return string|null
+     */
+    public function getWordAttribute()
+    {
+        $model = $this->translation();
+
+        return ($model !== false) ? $model->word : null;
+    }
+
+    /**
      * Get slug from english translation
      *
+     * @param string|int|null $id
      * @param string|null $language
      * @return string
      */
-    public function getSlug($id = null, $language = null)
+    public function getSlug($id = null, ?string $language = null): ?string
     {
         $language = $language ?? $this->getCurrentLanguage();
 
         $model = (empty($id) == false) ? $this->findByid($id) : $this;
         $translation = $model->translation($language);
-        $translation = (\is_object($translation) == true) ? $translation : $model->translation('en'); 
+        $translation = ($translation === false) ? $model->translation('en') : $translation; 
 
         return Utils::slug($translation->word);
     }
@@ -99,10 +112,10 @@ class Tags extends Model
      * @param string|integer $id
      * @return bool
      */
-    public function remove($id)
+    public function remove($id): bool
     {
         $model = $this->findById($id);
-        if (\is_object($model) == false) {
+        if (empty($model) == true) {
             return false;
         }    
 
@@ -111,7 +124,7 @@ class Tags extends Model
 
         $model->removeTranslations();
 
-        return $model->delete();      
+        return (bool)$model->delete();      
     }
 
     /**
@@ -128,13 +141,13 @@ class Tags extends Model
      * Return true if tag exist
      *
      * @param string $tag
-     * @param integer $excludeId
+     * @param integer|string|null $excludeId
      * @return boolean
      */
-    public function hasTag($tag, $excludeId = null)
+    public function hasTag(string $tag, $excludeId = null): bool
     {
         $model = $this->findTag($tag);
-        if (\is_object($model) == false) {
+        if (empty($model) == true) {
             return false;
         }
         if (empty($excludeId) == false) {
@@ -148,9 +161,9 @@ class Tags extends Model
      * Find tag
      *
      * @param string $tag
-     * @return Model
+     * @return Model|null
      */
-    public function findTag($tag)
+    public function findTag(string $tag)
     { 
         return $this->findTranslation('word',$tag);                       
     }
@@ -160,23 +173,23 @@ class Tags extends Model
      *
      * @param string $tag
      * @param string $language
-     * @return Model
+     * @return Model|false
      */
-    public function createTag($tag, $language = null)
+    public function createTag(string $tag, ?string $language = null)
     {       
         $language = $language ?? 'en';
         $model = $this->findTag($tag);
 
-        if (\is_object($model) == false) {               
+        if (empty($model) == true) {               
             $model = $this->create([]);
             if (\is_object($model) == true) {
-                $model->saveTranslation(['word' => $tag],$language,$model->id); 
-                return $model;    
+                $result = $model->saveTranslation(['word' => $tag],$language,$model->id); 
+                return ($result === false) ? false : $result;    
             }
             return false;
         }
-      
-        return $this->findById($model->tags_id);
+    
+        return false;
     }
 
     /**
@@ -186,9 +199,9 @@ class Tags extends Model
      * @param string|null $language
      * @return array|false
      */
-    public function add($tag, $language = null)
+    public function add($tag, ?string $language = null)
     {
-        $language = (empty($language) == true) ? 'en' : $language;
+        $language = $language ?? 'en';
         if (empty($tag) == true) {
             return false;
         }
@@ -204,7 +217,7 @@ class Tags extends Model
      * @param string|null $language
      * @return array
      */
-    public function addTags(array $tags, $language = null)
+    public function addTags(array $tags, ?string $language = null): array
     {
         $result = [];
         foreach ($tags as $tag) {  
@@ -226,15 +239,15 @@ class Tags extends Model
      * @param string|null $default
      * @return string|null
      */
-    public function getTranslationWord($language = null, $default = null)
+    public function getTranslationWord(?string $language = null, ?string $default = null): ?string
     {
-        $language = (empty($language) == true) ? 'en' : $language;
+        $language = $language ?? 'en';
 
         $model = $this->translation($language);     
         if (\is_object($model) == false) {
             return $default; 
         } 
         
-        return (isset($model->word) == true) ? $model->word : null;
+        return $model->word ?? null;
     }
 }

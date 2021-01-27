@@ -4,6 +4,17 @@
         <div class="seven wide column">           
             {{ component("components:search.form",{ namespace: 'tags' }) }}
         </div>
+        <div class="six wide column">   
+        </div>
+        <div class="two wide column right aligned">
+            {{  component('components:language.dropdown',{
+                    name: 'language',
+                    id: 'choose_language',
+                    selected: language,
+                    class: 'inline selection' 
+                })
+            }}
+        </div> 
         <div class="one wide column right floated">       
             {{ component('components:paginator.dropdown',{ namespace: 'tags' }) }}
         </div>
@@ -12,9 +23,9 @@
 <table class="ui compact stackable borderless basic table mt-2">
     <thead>
         <tr class="table-head">                
-            <th class="collapsing one wide">{{ columns.actions }}</th>
-            <th class="collapsing one wide">{{ columns.tag }}</th>
-            <th class="collapsing ten wide" >{{ columns.relations }}</th>                 
+            <th class="collapsing two wide">{{ columns.actions }}</th>
+            <th class="collapsing four wide">{{ columns.tag }}</th>
+            <th >{{ columns.relations }}</th>                 
         </tr>
     </thead>
     <tbody id="tags_rows" component="tags::admin.view.rows" namespace="tags" language="{{ language }}">

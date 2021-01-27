@@ -69,7 +69,7 @@ class TagsRelations extends Model
     /**
      * Tag model relation
      *
-     * @return Relation
+     * @return Relation|null
      */
     public function tag()
     {

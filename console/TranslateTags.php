@@ -11,6 +11,7 @@ namespace Arikaim\Extensions\Tags\Console;
 
 use Arikaim\Core\Console\ConsoleCommand;
 use Arikaim\Core\Arikaim;
+use Arikaim\Core\Console\ConsoleHelper;
 
 /**
  * Translate tags command
@@ -25,6 +26,7 @@ class TranslateTags extends ConsoleCommand
     protected function configure()
     {
         $this->setName('tags:translate')->setDescription('Translate tags.'); 
+        $this->addOptionalArgument('language','Language code');
     }
 
     /**
@@ -36,18 +38,28 @@ class TranslateTags extends ConsoleCommand
      */
     protected function executeCommand($input, $output)
     {       
-        $this->style->writeLn('');
-        $this->style->writeLn('Translate tags');
-        $this->style->writeLn('');
-        $hasPackage = Arikaim::packages()->create('extensions')->hasPackage('translations');
-        if ($hasPackage == false) {
-            $this->showError('Translations extension not installed!');
-            return;
+        $this->showTitle();
+
+        $language = $input->getArgument('language');
+        if (empty($language) == true) {
+            $language = Arikaim::options()->get('tags.job.translate.language');
         }
 
         $job = Arikaim::queue()->create("translateTags");
-        $job->execute();
+
+        $this->writeFieldLn('Language',$language);
+
+        $job = Arikaim::queue()->executeJob($job,function($title) {
+            $this->writeLn(ConsoleHelper::checkMark() . ' ' . $title);
+        },function($error) {
+            $this->writeLn(ConsoleHelper::errorMark() . ' ' . $error);
+        });
      
+        if ($job->hasSuccess() == false) {
+            $this->showErrors($job->getErrors());
+            return;
+        } 
+        
         $this->showCompleted();
     }
 }

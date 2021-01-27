@@ -53,7 +53,7 @@ class TagsTranslations extends Model
     /**
      * Tag model relation
      *
-     * @return mixed
+     * @return Relation|null
      */
     public function tag()
     {

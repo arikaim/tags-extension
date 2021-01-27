@@ -22,7 +22,7 @@ class TagsDelete extends ConsoleCommand
      *
      * @return void
      */
-    protected function configure()
+    protected function configure(): void
     {
         $this->setName('tags:delete')->setDescription('Delete tags.'); 
     }
@@ -36,34 +36,29 @@ class TagsDelete extends ConsoleCommand
      */
     protected function executeCommand($input, $output)
     {       
-        $this->style->writeLn('');
+        $this->showTitle();
+       
         $tags = Model::Tags('tags')->all();
         $relations = Model::TagsRelations('tags');
 
-        $this->style->writeLn('Total tags: ' . $tags->count());
-        $this->style->writeLn('');
+        $this->writeFieldLn('Total',$tags->count());
 
         $deleted = 0;
-        foreach ($tags as $item) {
-            $this->style->writeLn('');
-            $this->style->writeLn('Tag: ' . $item->translation('en')->word );    
+        foreach ($tags as $item) {           
             $count = $item->translations()->count();
             $rows = $relations->getRows($item->id);
 
-            if ($count == 0) {
-                $this->style->writeLn('delete ...');
+            if ($count == 0) {             
                 $item->remove($item->id);
                 $deleted++;
             }
             
-            if ($rows->count() == 0) {               
-                $this->style->writeLn('No relations delete tag ...');
+            if ($rows->count() == 0) {                              
                 $item->remove($item->id);
                 $deleted++;
             }
         }
-        $this->style->writeLn('Deleted tags: ' . $deleted);
-        $this->style->writeLn('');
+        $this->writeFieldLn('Deleted',$deleted);
         
         $this->showCompleted();
     }

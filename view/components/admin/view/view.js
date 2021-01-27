@@ -25,6 +25,15 @@ function TagsView() {
 
         this.loadMessages();
 
+        $('#choose_language').dropdown({
+            onChange: function(value) {  
+                $('#tags_rows').attr('language',value);     
+                paginator.setParams({ language: value });  
+                search.options.params = { language: value };     
+                self.loadRows(value);       
+            }
+        }); 
+
         paginator.init('tags_rows',{
             name: 'tags::admin.view.rows',
             params: { language: language }
@@ -36,7 +45,7 @@ function TagsView() {
             event: 'tags.search.load'
         },'tags')  
 
-        arikaim.events.on('tags.search.load',function(result) {                 
+        arikaim.events.on('tags.search.load',function(result) {     
             paginator.setPage(1,'tags',function(result) {
                 paginator.reload();
             });
@@ -44,6 +53,16 @@ function TagsView() {
         },'tagsSearch');
 
         this.initRows();
+    };
+
+    this.loadRows = function(language) {
+        arikaim.page.loadContent({
+            id: 'tags_rows',
+            component: 'tags::admin.view.rows',
+            params: { language: language }
+        },function() {
+            self.initRows();
+        });   
     };
 
     this.initRows = function() {
@@ -81,6 +100,17 @@ function TagsView() {
             arikaim.page.loadContent({
                 id: 'tags_content',
                 component: 'tags::admin.relations',
+                params: { uuid: uuid }
+            });            
+        });
+
+        arikaim.ui.button('.translations-button',function(element) {
+            var uuid = $(element).attr('uuid');
+            
+            arikaim.ui.setActiveTab('#translations','.tags-tab-item')   
+            arikaim.page.loadContent({
+                id: 'tags_content',
+                component: 'tags::admin.translations',
                 params: { uuid: uuid }
             });            
         });

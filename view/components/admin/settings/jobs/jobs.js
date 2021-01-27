@@ -13,19 +13,17 @@ $(document).ready(function() {
         onChecked: function(value) {         
             var uuid = $(this).attr('uuid');           
             jobs.enable(uuid,function(result) {
-                jobs.load(uuid,'translate_tags_job',function(result) {
-                    $('#translate_tags_job').accordion({});
+                jobs.load(uuid,'translate_tags_job',function(result) {                   
                 });   
-                arikaim.ui.show('#job_settings');        
+                arikaim.ui.show('#job_settings_form');        
             });
         },
         onUnchecked: function(value) {    
             var uuid = $(this).attr('uuid');
             jobs.disable(uuid,function(result) {
-                jobs.load(uuid,'translate_tags_job',function(result) {
-                    $('#translate_tags_job').accordion({});
+                jobs.load(uuid,'translate_tags_job',function(result) {                   
                 });
-                arikaim.ui.hide('#job_settings');
+                arikaim.ui.hide('#job_settings_form');
             });
         }
     });

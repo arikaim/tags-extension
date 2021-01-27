@@ -3,6 +3,7 @@
 {% set tags = tags.join('tags','tags.id','=','tags_translations.tags_id')%}  
 {{ createSearch('word','tags','ilike:%{value}%','and') }}
 {% set tags = applySearch(tags,'tags') %}
+
 {% set items = paginate(tags,'tags').getItems() %}
 
 {% if items|length == 0 %}
@@ -12,7 +13,7 @@
 {% endif %}
 {% for item in items %}
 <tr id="{{ item.tag.uuid }}">
-    <td>           
+    <td>                  
         <div class="ui basic mini icon button edit-button" uuid="{{ item.tag.uuid }}" {{ buttons.edit.title|attr('title') }} data-title="{{ item.word }}">
             <i class="icon edit"></i>                   
         </div>
@@ -21,6 +22,9 @@
         </div>
         <div class="ui basic mini icon button relations-button" uuid="{{ item.tag.uuid }}" {{ buttons.relations.title|attr('title') }}>
             <i class="icon linkify"></i>                   
+        </div>
+        <div class="ui basic mini icon button translations-button" uuid="{{ item.tag.uuid }}" {{ buttons.translations.title|attr('title') }}>
+            <i class="icon globe"></i>                   
         </div>
     </td>
     <td>

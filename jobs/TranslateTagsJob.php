@@ -13,15 +13,25 @@ use Arikaim\Core\Queue\Jobs\CronJob;
 use Arikaim\Core\Arikaim;
 use Arikaim\Core\Db\Model;
 use Arikaim\Core\Utils\Factory;
+use Arikaim\Extensions\Tags\Classes\Tags;
 
 use Arikaim\Core\Interfaces\Job\RecuringJobInterface;
 use Arikaim\Core\Interfaces\Job\JobInterface;
+use Arikaim\Core\Interfaces\Job\JobLogInterface;
+use Arikaim\Core\Interfaces\Job\JobProgressInterface;
+
+use Arikaim\Core\Queue\Traits\JobLog;
+use Arikaim\Core\Queue\Traits\JobProgress;
 
 /**
  * Translate tags cron job
  */
-class TranslateTagsJob extends CronJob implements RecuringJobInterface,JobInterface
+class TranslateTagsJob extends CronJob implements RecuringJobInterface,JobInterface, JobLogInterface, JobProgressInterface
 {
+    use 
+        JobLog,
+        JobProgress;
+
     /**
      * Constructor
      *
@@ -29,7 +39,7 @@ class TranslateTagsJob extends CronJob implements RecuringJobInterface,JobInterf
      * @param string|null $name
      * @param integer $priority
      */
-    public function __construct($extension = null, $name = null, $priority = 0)
+    public function __construct(?string $extension = null, ?string $name = null, int $priority = 0)
     {
         parent::__construct($extension,$name,$priority);
         
@@ -55,36 +65,27 @@ class TranslateTagsJob extends CronJob implements RecuringJobInterface,JobInterf
             Arikaim::options()->set('tags.job.translate.last.id',0);
             $lastId = 0;
         }
-
-        $hasPackage = Arikaim::packages()->create('extensions')->hasPackage('translations');
-        if ($hasPackage == false) {
+       
+        $maxTranslations = 10;
+        $translated = 0;
+        $transalte = Factory::createInstance('Classes\\Translations',[],'translations');
+        if (empty($transalte) == true) {
             return false;
         }
-        $maxTranslations = 10;
-        $createdTranslations = 0;
-        $transalte = Factory::createController(Arikaim::getContainer(),'TranslationsControlPanel','translations');
-    
-        $tags = $model->where('id','>',$lastId)->take($maxTranslations)->get();
-        foreach ($tags as $tag) {          
-            $translation = $tag->translation($language);
-            if ($translation === false) {
-                // get english translation
-                $defaultTranslation = $tag->translation('en');
-                if ($defaultTranslation !== false) { 
-                    $translatedFields = $transalte->translateFields('word',$defaultTranslation->toArray(),$language);
 
-                    if ($model->hasTag($translatedFields['word']) == false) {
-                        if ($defaultTranslation->word != $translatedFields['word']) {
-                            $tag->saveTranslation($translatedFields,$language);
-                            $createdTranslations++;                      
-                        }     
-                    }              
-                }
-            }
+        $tags = $model->where('id','>',$lastId)->take($maxTranslations)->get();
+        foreach ($tags as $tag) {              
+            $result = Tags::translate($tag,$language,$transalte);
+            if ($result === false) {
+                $this->jobProgressError('Error translating tag ' . $tag->word);     
+            } else {
+                $this->jobProgress($tag->word);
+                $translated++;
+            }           
         }
 
         Arikaim::options()->set('tags.job.translate.last.id',$tag->id);
       
-        return $createdTranslations;
+        return $translated;
     }
 }
