@@ -4,8 +4,7 @@ function applyTranslation(result) {
     $('#tags').val(result.fields['word']);
 }
 
-$(document).ready(function() {
-
+arikaim.component.onLoaded(function() {
     $('#choose_language').dropdown({
         onChange: function(value) {
             var uuid = $('#tag_form_content').attr('uuid');
@@ -19,22 +18,11 @@ $(document).ready(function() {
                     language: value 
                 }
             },function(result) {
-                initTagsForm();
+                tags.initTagsForm();
             });   
             $('#language').val(value);
         }
     }); 
-
-    function initTagsForm() {
-        arikaim.ui.form.onSubmit("#tags_form",function() {  
-            var language = $('#choose_language').dropdown('get value');
-            $('#language').val(language);
-
-            return tags.update('#tags_form');
-        },function(result) {          
-            arikaim.ui.form.showMessage(result.message);        
-        });
-    }
 
     $('.tags-dropdown').on('change',function(element) {
         var selected = $(this).dropdown('get value');    
@@ -50,10 +38,10 @@ $(document).ready(function() {
                 component: 'tags::admin.form',
                 params: { uuid: selected }
             },function(result) {
-                initTagsForm();
+                tags.initTagsForm();
             });  
         }            
     });
 
-    initTagsForm();    
+    tags.initTagsForm();    
 });

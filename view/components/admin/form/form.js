@@ -1,6 +1,6 @@
 'use strict';
 
-arikaim.page.onReady(function() {    
+arikaim.component.onLoaded(function() {   
     arikaim.ui.form.addRules("#tags_form",{
         inline: false,
         fields: {

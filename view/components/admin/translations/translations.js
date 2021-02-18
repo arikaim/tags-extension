@@ -1,6 +1,6 @@
 'use strict';
 
-$(document).ready(function() {
+arikaim.component.onLoaded(function() {
     $('.tags-dropdown').on('change',function(element) {
         var selected = $(this).dropdown('get value');    
         
@@ -14,7 +14,7 @@ $(document).ready(function() {
                 component: 'tags::admin.translations.items',
                 params: { uuid: selected }
             },function(result) {
-                initTagsForm();
+                tags.initTagsForm();
             });  
         }            
     });

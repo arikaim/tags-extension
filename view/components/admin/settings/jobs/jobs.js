@@ -1,6 +1,6 @@
 'use strict';
 
-$(document).ready(function() {
+arikaim.component.onLoaded(function() {
     $('#translate_tags_job').accordion({});
 
     $('#choose_language').dropdown({

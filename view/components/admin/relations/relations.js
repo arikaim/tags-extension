@@ -1,6 +1,6 @@
 'use strict';
 
-$(document).ready(function() {
+arikaim.component.onLoaded(function() {
     $('.tags-dropdown').on('change',function(element) {
         var selected = $(this).dropdown('get value');  
         if (isEmpty(selected) == true) {

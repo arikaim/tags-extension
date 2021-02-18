@@ -7,8 +7,7 @@
 'use strict';
 
 function TagsControlPanel() {
-    var self = this;
-
+ 
     this.delete = function(uuid, onSuccess, onError) {
         return arikaim.delete('/api/tags/admin/delete/' + uuid,onSuccess,onError);          
     };
@@ -25,7 +24,7 @@ function TagsControlPanel() {
         return arikaim.get('/api/tags/admin/list/' + query,onSuccess,onError);          
     };
    
-    this.loadAddTag = function(parent_id, language) {
+    this.loadAddTag = function(language) {
         arikaim.ui.setActiveTab('#add_tag','.tags-tab-item')   
         arikaim.page.loadContent({
             id: 'tags_content',
@@ -34,6 +33,17 @@ function TagsControlPanel() {
         });          
     };
 
+    this.initTagsForm = function() {
+        arikaim.ui.form.onSubmit("#tags_form",function() {  
+            var language = $('#choose_language').dropdown('get value');
+            $('#language').val(language);
+
+            return tags.update('#tags_form');
+        },function(result) {          
+            arikaim.ui.form.showMessage(result.message);        
+        });
+    }
+
     this.init = function() {           
         arikaim.ui.tab();
     };
@@ -41,6 +51,6 @@ function TagsControlPanel() {
 
 var tags = new TagsControlPanel();
 
-arikaim.page.onReady(function() {
+arikaim.component.onLoaded(function() {
     tags.init();
 });

@@ -8,22 +8,10 @@
 
 function TagsView() {
     var self = this;
-    this.messages = null;
-
-    this.loadMessages = function() {
-        if (isObject(this.messages) == true) {
-            return;
-        }
-
-        arikaim.component.loadProperties('tags::admin.view',function(params) { 
-            self.messages = params.messages;
-        }); 
-    };
-
+  
     this.init = function() {
+        this.loadMessages('tags::admin.view');
         var language = $('#tags_rows').attr('language');
-
-        this.loadMessages();
 
         $('#choose_language').dropdown({
             onChange: function(value) {  
@@ -43,7 +31,7 @@ function TagsView() {
             id: 'tags_rows',
             component: 'tags::admin.view.rows',
             event: 'tags.search.load'
-        },'tags')  
+        },'tags');
 
         arikaim.events.on('tags.search.load',function(result) {     
             paginator.setPage(1,'tags',function(result) {
@@ -71,9 +59,9 @@ function TagsView() {
             var uuid = $(element).attr('uuid');
             var title = $(element).attr('data-title');
             
-            var message = arikaim.ui.template.render(self.messages.remove.content,{ title: title });
+            var message = arikaim.ui.template.render(self.getMessage('remove.content'),{ title: title });
             modal.confirmDelete({ 
-                title: self.messages.remove.title,
+                title: self.getMessage('remove.title'),
                 description: message
             },function() {
                 tags.delete(uuid,function(result) {
@@ -117,9 +105,9 @@ function TagsView() {
     };
 }
 
-var tagsView = new TagsView();
+var tagsView = createObject(TagsView,ControlPanelView);
 
-$(document).ready(function() {
+arikaim.component.onLoaded(function() {
     tagsView.init();   
     tagsView.initRows();
 });

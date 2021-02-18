@@ -211,6 +211,28 @@ class Tags extends Model
     }
 
     /**
+     * Get tags id
+     *
+     * @param array $tags
+     * @return array
+     */
+    public function getTagsId(array $tags): array
+    {
+        $result = [];
+        foreach ($tags as $tag) {  
+            $model = $this->findTag($tag);
+            if ($model != null) {
+                $id = (is_object($model->tag) == true) ? $model->tag->id : null;
+                if (empty($id) == false) {
+                    $result[] = $model->tag->id;
+                }                  
+            }
+        }
+
+        return $result;
+    }
+
+    /**
      * Add tags
      *
      * @param array $tags
