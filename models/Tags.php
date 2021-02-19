@@ -163,9 +163,13 @@ class Tags extends Model
      * @param string $tag
      * @return Model|null
      */
-    public function findTag(string $tag, $language = null)
+    public function findTag(string $tag)
     { 
-        return $this->findTranslation('word',$tag, $language);                       
+        $query = $this->whereHas('translations',function ($query) use($tag) {
+            $query->where('word', '=',$tag);
+        });
+
+        return $query->first();             
     }
 
     /**
