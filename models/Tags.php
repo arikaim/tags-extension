@@ -163,9 +163,9 @@ class Tags extends Model
      * @param string $tag
      * @return Model|null
      */
-    public function findTag(string $tag)
+    public function findTag(string $tag, $language = null)
     { 
-        return $this->findTranslation('word',$tag);                       
+        return $this->findTranslation('word',$tag, $language);                       
     }
 
     /**
@@ -180,7 +180,7 @@ class Tags extends Model
         $language = $language ?? 'en';
         $model = $this->findTag($tag);
 
-        if (empty($model) == true) {               
+        if ($model == null) {               
             $model = $this->create([]);
             if (\is_object($model) == true) {
                 $result = $model->saveTranslation(['word' => $tag],$language,$model->id); 
@@ -243,7 +243,7 @@ class Tags extends Model
     {
         $result = [];
         foreach ($tags as $tag) {  
-            if (empty($tag) == false) {                          
+            if (empty($tag) == false) {   
                 $model = $this->createTag($tag,$language);
                 if (\is_object($model) == true) {
                     $result[] = $model->id;
