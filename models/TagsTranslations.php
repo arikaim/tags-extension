@@ -59,4 +59,20 @@ class TagsTranslations extends Model
     {
         return $this->hasOne(Tags::class,'id'); 
     }
+
+    /**
+     * Find tag by word
+     *
+     * @param string $word
+     * @return Model|null
+     */
+    public function fidTag(?string $word)
+    {
+        if (empty($word) == true) {
+            return null;
+        }
+        $word = \mb_strtolower($word);
+        
+        return $this->whereRaw('LOWER(word) = ?',[$word])->first();
+    }
 }
