@@ -46,7 +46,7 @@ class TagsDelete extends ConsoleCommand
         $deleted = 0;
         foreach ($tags as $item) {           
             $count = $item->translations()->count();
-            $rows = $relations->getRows($item->id);
+            $rows = $relations->getItemsQuery($item->id);
 
             if ($count == 0) {             
                 $item->remove($item->id);

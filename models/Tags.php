@@ -244,6 +244,8 @@ class Tags extends Model
     {
         $result = [];
         foreach ($tags as $tag) {  
+            $tag = \trim($tag);
+            $tag = Utils::slug($tag);
             if (empty($tag) == false) {   
                 $model = $this->createTag($tag,$language);
                 if (\is_object($model) == true) {
