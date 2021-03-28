@@ -101,7 +101,7 @@ class Tags extends Model
 
         $model = (empty($id) == false) ? $this->findByid($id) : $this;
         $translation = $model->translation($language);
-        $translation = ($translation === false) ? $model->translation('en') : $translation; 
+        $translation = (\is_object($translation) === false) ? $model->translation('en') : $translation; 
 
         return Utils::slug($translation->word);
     }

@@ -13,6 +13,7 @@ use Illuminate\Database\Eloquent\Model;
 
 use Arikaim\Extensions\Tags\Models\Tags;
 
+use Arikaim\Core\Utils\Utils;
 use Arikaim\Core\Db\Traits\Uuid;
 use Arikaim\Core\Db\Traits\Find;
 
@@ -74,5 +75,15 @@ class TagsTranslations extends Model
         $word = \mb_strtolower($word);
         
         return $this->whereRaw('LOWER(word) = ?',[$word])->first();
+    }
+
+    /**
+     * Get 'slug' attribute
+     *
+     * @return void
+     */
+    public function getSlugAttribute()
+    {
+        return Utils::slug($this->word);
     }
 }

@@ -9,19 +9,19 @@
 function TagsControlPanel() {
  
     this.delete = function(uuid, onSuccess, onError) {
-        return arikaim.delete('/api/tags/admin/delete/' + uuid,onSuccess,onError);          
+        return arikaim.delete('/api/admin/tags/delete/' + uuid,onSuccess,onError);          
     };
 
     this.add = function(data, onSuccess, onError) {
-        return arikaim.post('/api/tags/admin/add',data,onSuccess,onError);          
+        return arikaim.post('/api/admin/tags/add',data,onSuccess,onError);          
     };
 
     this.update = function(data, onSuccess, onError) {
-        return arikaim.put('/api/tags/admin/update',data,onSuccess,onError);          
+        return arikaim.put('/api/admin/tags/update',data,onSuccess,onError);          
     };
 
     this.getList = function(query, onSuccess, onError) {
-        return arikaim.get('/api/tags/admin/list/' + query,onSuccess,onError);          
+        return arikaim.get('/api/admin/tags/list/' + query,onSuccess,onError);          
     };
    
     this.loadAddTag = function(language) {

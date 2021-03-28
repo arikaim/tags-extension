@@ -1,4 +1,9 @@
 {
+    "include": {       
+        "js": [
+            "translations::admin"
+        ]
+    },
     "access": {
         "auth": "session",
         "redirect": "/admin",

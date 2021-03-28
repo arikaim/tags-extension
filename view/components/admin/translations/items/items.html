@@ -9,8 +9,8 @@
             {{ component('components:language.label',{ language: item.language, class: ' basic horizontal ' }) }}            
             {{ item.word }}
             <div class="ui right floated basic label" title="{{ labels.slug }}">
-                <span class="ui blue text">{{ labels.slug }}</span>              
-                <span class="pl-2">{{ item.getSlug(null,item.language) }}</span>
+                <span class="ui blue text">{{ labels.slug }}</span>                     
+                <span class="pl-2">{{ item.slug }}</span>
             </div>
         </div>      
     </div>
