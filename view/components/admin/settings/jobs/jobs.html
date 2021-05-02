@@ -1,37 +1,50 @@
 {% component 'components:tabs.vertical.content' %}
+{% set disabled = (demo_mode == true) ? 'disabled' : '' %}
+{% if demo_mode == true %}
+<div class="ui warning message">
+    {{ labels.demo }}
+</div>
+{% endif %}
 {% set job = service('queue').getJob('translateTags') %}
 {% set to_language = getOption('tags.job.translate.language') %}
 {% set current_tag_id = getOption('tags.job.translate.last.id',0) %}
 {% if hasExtension('translations') == true %}
-    <div class="mt-4">     
-        <div class="ui toggle checkbox" id="translate_tags_toggle">
-            <input type="checkbox" {{ (job.status != 5) ? 'checked' : '' }} uuid="{{ job.uuid }}" value="1">
-            <label class="font-bold">{{ labels.translate }}</label>
-            <span class="ml-16 pl-1 text-gray-700">{{ descriptions.translate }}</span>
-        </div>  
-    </div>
-    <form class="ui form mt-10 {{ (job.status == 5) ? 'hidden' : '' }}" id="job_settings_form" method="POST">        
-        <div class="field">      
-            <div class="mt-4">  
-                <div class="fields">
-                    <div class="field">
-                        <label>{{ labels.to }}</label>
-                        {{  component('components:language.dropdown',{
-                                name: 'language', 
-                                id: 'choose_language', 
-                                selected: to_language, 
-                                class: 'inline search selection' 
-                            }) 
-                        }}    
-                    </div>
-                    <div class="field">
-                        <label>{{ labels.last }}</label>
-                        <input type="text" readonly="" disabled="" tabindex="-1" value="{{ current_tag_id }}">                        
-                    </div>
-                </div>                                                            
-            </div>            
-        </div>
-    </form>  
+
+    {% if hasExtension('queue') == false %}
+            {{  component('system:admin.packages.store.package-message',{ 
+                    package_type: 'extensions',
+                    package_name: 'Queue Jobs',
+                    hide_button: true,
+                }) 
+            }}
+    {% else %}
+        <div class="mt-4 {{ disabled }}">
+            {{ component('queue::admin.jobs.status.toggle',{ job_name: 'translateTags' }) }} 
+        </div>   
+        <form class="ui form mt-10" id="job_settings_form">        
+            <div class="field">      
+                <div class="mt-4">  
+                    <div class="fields">
+                        <div class="field">
+                            <label>{{ labels.to }}</label>
+                            {{  component('components:language.dropdown',{
+                                    name: 'language', 
+                                    id: 'choose_language', 
+                                    selected: to_language, 
+                                    class: 'inline search selection' 
+                                }) 
+                            }}    
+                        </div>
+                        <div class="field">
+                            <label>{{ labels.last }}</label>
+                            <input type="text" readonly="" disabled="" tabindex="-1" value="{{ current_tag_id }}">                        
+                        </div>
+                    </div>                                                            
+                </div>            
+            </div>
+        </form>  
+    {% endif %}
+    
 {% else %}
     <div class="ui message error">     
         <h4>{{ labels.alert }}</h4>   

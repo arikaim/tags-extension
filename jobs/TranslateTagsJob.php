@@ -15,7 +15,7 @@ use Arikaim\Core\Db\Model;
 use Arikaim\Core\Utils\Factory;
 use Arikaim\Extensions\Tags\Classes\Tags;
 
-use Arikaim\Core\Interfaces\Job\RecuringJobInterface;
+use Arikaim\Core\Interfaces\Job\RecurringJobInterface;
 use Arikaim\Core\Interfaces\Job\JobInterface;
 use Arikaim\Core\Interfaces\Job\JobLogInterface;
 use Arikaim\Core\Interfaces\Job\JobProgressInterface;
@@ -26,7 +26,7 @@ use Arikaim\Core\Queue\Traits\JobProgress;
 /**
  * Translate tags cron job
  */
-class TranslateTagsJob extends CronJob implements RecuringJobInterface,JobInterface, JobLogInterface, JobProgressInterface
+class TranslateTagsJob extends CronJob implements RecurringJobInterface,JobInterface, JobLogInterface, JobProgressInterface
 {
     use 
         JobLog,
