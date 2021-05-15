@@ -26,7 +26,11 @@ use Arikaim\Core\Queue\Traits\JobProgress;
 /**
  * Translate tags cron job
  */
-class TranslateTagsJob extends CronJob implements RecurringJobInterface,JobInterface, JobLogInterface, JobProgressInterface
+class TranslateTagsJob extends CronJob implements 
+    RecurringJobInterface,
+    JobInterface, 
+    JobLogInterface, 
+    JobProgressInterface
 {
     use 
         JobLog,
@@ -37,11 +41,11 @@ class TranslateTagsJob extends CronJob implements RecurringJobInterface,JobInter
      *
      * @param string|null $extension
      * @param string|null $name
-     * @param integer $priority
+     * @param array $params
      */
-    public function __construct(?string $extension = null, ?string $name = null, int $priority = 0)
+    public function __construct(?string $extension = null, ?string $name = null, array $params = [])
     {
-        parent::__construct($extension,$name,$priority);
+        parent::__construct($extension,$name,$params);
         
         $this->runEveryMinute(10);
     }
