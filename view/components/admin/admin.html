@@ -5,7 +5,7 @@
     { id: 'settings_tab',icon: 'cogs',component: 'tags::admin.settings',title: labels.settings }
 ] %}
 
-{{  component('components:tabs',{ 
+{{  component('semantic~tabs',{ 
         items: items,
         menu: { component: 'system:admin.extensions.menu.actions', extension: 'tags' },
         content: { component: 'tags::admin.menu', params: { language: language } } 

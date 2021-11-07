@@ -14,14 +14,18 @@ use Arikaim\Core\Arikaim;
 use Arikaim\Core\Db\Model;
 use Arikaim\Core\Utils\Factory;
 use Arikaim\Extensions\Tags\Classes\Tags;
+use Arikaim\Core\Collection\Properties;
 
 use Arikaim\Core\Interfaces\Job\RecurringJobInterface;
 use Arikaim\Core\Interfaces\Job\JobInterface;
 use Arikaim\Core\Interfaces\Job\JobLogInterface;
 use Arikaim\Core\Interfaces\Job\JobProgressInterface;
+use Arikaim\Core\Interfaces\Job\SaveJobConfigInterface;
+use Arikaim\Core\Interfaces\ConfigPropertiesInterface;
 
 use Arikaim\Core\Queue\Traits\JobLog;
 use Arikaim\Core\Queue\Traits\JobProgress;
+use Arikaim\Core\Collection\Traits\ConfigProperties;
 
 /**
  * Translate tags cron job
@@ -30,11 +34,14 @@ class TranslateTagsJob extends CronJob implements
     RecurringJobInterface,
     JobInterface, 
     JobLogInterface, 
+    ConfigPropertiesInterface,
+    SaveJobConfigInterface,
     JobProgressInterface
 {
     use 
         JobLog,
-        JobProgress;
+        JobProgress,
+        ConfigProperties;
 
     /**
      * Constructor
@@ -58,38 +65,82 @@ class TranslateTagsJob extends CronJob implements
     public function execute()
     {
         $model = Model::Tags('tags');
-        $language = Arikaim::options()->get('tags.job.translate.language');
+        $config = $this->getConfigProperties();  
+        $language = (string)$config->getValue('language');
         if (empty($language) == true) {
+            $this->setLogMessage('Tag translation error, language not set.');
             return false;
         }
-
-        $lastId = (int)Arikaim::options()->get('tags.job.translate.last.id',0);
+        $maxTranslations = (int)$config->getValue('max_translations');
+        $lastId = (int)$config->getValue('current_tag_id');      
         if ($lastId >= $model->latest('id')->first()->id) {
             // reset last Id
-            Arikaim::options()->set('tags.job.translate.last.id',0);
             $lastId = 0;
         }
-       
-        $maxTranslations = 10;
+             
         $translated = 0;
         $transalte = Factory::createInstance('Classes\\Translations',[],'translations');
         if (empty($transalte) == true) {
+            $this->setLogMessage('Tag translation error, translation extension not instaled.');
             return false;
         }
 
         $tags = $model->where('id','>',$lastId)->take($maxTranslations)->get();
-        foreach ($tags as $tag) {              
+              
+        foreach ($tags as $tag) {     
             $result = Tags::translate($tag,$language,$transalte);
             if ($result === false) {
-                $this->jobProgressError('Error translating tag ' . $tag->word);     
+                $this->jobProgressError('Error translating tag ' . $tag->word);    
+                $this->setLogMessage('Error translating tag ' . $tag->word); 
             } else {
                 $this->jobProgress($tag->word);
                 $translated++;
             }           
         }
 
-        Arikaim::options()->set('tags.job.translate.last.id',$tag->id);
-      
+        if ($translated > 0) {
+            $this->setLogMessage("Translated $translated tags.");
+        }       
+        // save config  
+        $this->configProperties->setPropertyValue('current_tag_id',$tag->id);
+
         return $translated;
+    }
+
+     /**
+     * Init config properties
+     *
+     * @param Properties $properties
+     * @return void
+     */
+    public function initConfigProperties(Properties $properties): void
+    {
+        $properties->property('language',function($property) {
+            $property
+                ->title('Translate to Language')
+                ->description('language')
+                ->type('language-dropdown')
+                ->required(true)
+                ->readonly(false)            
+                ->default('en');
+        });     
+        $properties->property('max_translations',function($property) {
+            $property
+                ->title('Max tags translations')
+                ->description('Maximum tags translations per job run')
+                ->type('number')
+                ->required(true)
+                ->readonly(false)            
+                ->default(10);
+        });   
+        $properties->property('current_tag_id',function($property) {
+            $property
+                ->title('Current Tag Id')
+                ->description('Current tag Id.')
+                ->type('number')
+                ->required(true)
+                ->readonly(false)            
+                ->default(0);
+        });         
     }
 }

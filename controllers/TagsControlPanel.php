@@ -43,7 +43,7 @@ class TagsControlPanel extends ControlPanelApiController
 
             $model = Model::Tags('tags');                
             $createdTags = $model->add($tags,$language);
-            $result = (\is_array($createdTags) == true) ?  \count($createdTags) : false; 
+            $result = (\is_array($createdTags) == true) ? \count($createdTags) : false; 
             $this->setResponse(($result > 0),function() use($result,$language) {                                
                 $this
                     ->message('add')

@@ -1,4 +1,4 @@
-{% component 'components:tabs.vertical.content' %}
+{% component 'semantic~tabs.vertical.content' %}
 {% set disabled = (demo_mode == true) ? 'disabled' : '' %}
 {% if demo_mode == true %}
 <div class="ui warning message">
@@ -6,45 +6,26 @@
 </div>
 {% endif %}
 {% set job = service('queue').getJob('translateTags') %}
-{% set to_language = getOption('tags.job.translate.language') %}
-{% set current_tag_id = getOption('tags.job.translate.last.id',0) %}
 {% if hasExtension('translations') == true %}
-
     {% if hasExtension('queue') == false %}
-            {{  component('system:admin.packages.store.package-message',{ 
-                    package_type: 'extensions',
-                    package_name: 'Queue Jobs',
-                    hide_button: true,
-                }) 
-            }}
+        {{  component('system:admin.packages.store.package-message',{ 
+                package_type: 'extensions',
+                package_name: 'Queue Jobs',
+                hide_button: true,
+            }) 
+        }}
     {% else %}
         <div class="mt-4 {{ disabled }}">
             {{ component('queue::admin.jobs.status.toggle',{ job_name: 'translateTags' }) }} 
-        </div>   
-        <form class="ui form mt-10" id="job_settings_form">        
-            <div class="field">      
-                <div class="mt-4">  
-                    <div class="fields">
-                        <div class="field">
-                            <label>{{ labels.to }}</label>
-                            {{  component('components:language.dropdown',{
-                                    name: 'language', 
-                                    id: 'choose_language', 
-                                    selected: to_language, 
-                                    class: 'inline search selection' 
-                                }) 
-                            }}    
-                        </div>
-                        <div class="field">
-                            <label>{{ labels.last }}</label>
-                            <input type="text" readonly="" disabled="" tabindex="-1" value="{{ current_tag_id }}">                        
-                        </div>
-                    </div>                                                            
-                </div>            
-            </div>
-        </form>  
+        </div>
+        <div class="mt-4" id="job_form_content">
+            <div class="ui segment" id="feed_driver">
+                <h4>{{ labels.feed }}</h4>
+                {{ component('system:admin.drivers.dropdown',{ selected: feed_driver, category: 'feeds.games', calss: 'fluid' }) }}                       
+            </div>    
+            {{ component('queue::admin.jobs.config',{ uuid: 'translateTags' }) }}
+        </div>
     {% endif %}
-    
 {% else %}
     <div class="ui message error">     
         <h4>{{ labels.alert }}</h4>   

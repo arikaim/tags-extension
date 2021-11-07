@@ -36,10 +36,7 @@ class Tags extends Extension
         $this->registerConsoleCommand('TagsDelete');
         $this->registerConsoleCommand('TranslateTags');
         // Jobs
-        $this->addJob("TranslateTagsJob",'translateTags',true);
-        // Options
-        $this->createOption('tags.job.translate.language',null);
-        $this->createOption('tags.job.translate.last.id',0);       
+        $this->addJob("TranslateTagsJob",'translateTags',true);        
     }   
 
     /**

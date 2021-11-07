@@ -2,12 +2,12 @@
 <div class="ui segment">
     <div class="ui stackable grid">
         <div class="seven wide column">           
-            {{ component("components:search.form",{ namespace: 'tags' }) }}
+            {{ component("semantic~search.form",{ namespace: 'tags' }) }}
         </div>
         <div class="six wide column">   
         </div>
         <div class="two wide column right aligned">
-            {{  component('components:language.dropdown',{
+            {{  component('semantic~language.dropdown',{
                     name: 'language',
                     id: 'choose_language',
                     selected: language,
@@ -16,7 +16,7 @@
             }}
         </div> 
         <div class="one wide column right floated">       
-            {{ component('components:paginator.dropdown',{ namespace: 'tags' }) }}
+            {{ component('semantic~paginator.dropdown',{ namespace: 'tags' }) }}
         </div>
     </div>
 </div>
@@ -33,5 +33,5 @@
     </tbody>  
 </table>
 <div class="mt-2" id="paginator">
-    {{ component('components:paginator',{ namespace: 'tags' }) }}
+    {{ component('semantic~paginator',{ namespace: 'tags' }) }}
 </div>

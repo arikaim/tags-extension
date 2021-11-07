@@ -46,7 +46,10 @@ class TagsApi extends ApiController
             $this->setResponse(\is_object($model),function() use($model) {     
                 $items = [];
                 foreach ($model as $item) {
-                    $items[]= ['name' => $item['word'],'value' => $item['tags_id']];
+                    $items[] = [
+                        'name'  => $item['word'],
+                        'value' => $item['tags_id']
+                    ];
                 }
                 $this                    
                     ->field('success',true)
