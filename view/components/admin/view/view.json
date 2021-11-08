@@ -3,6 +3,9 @@
         "content": "View",
         "icon": "list"              
     },
+    "tooltips": {
+        "language": "Select tags language"
+    },
     "columns": {
         "tag": "Tag",
         "relations": "Relations",

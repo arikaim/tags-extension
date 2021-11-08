@@ -12,6 +12,7 @@ function TagsView() {
     this.init = function() {
         this.loadMessages('tags::admin.view');
         var language = $('#tags_rows').attr('language');
+        $('.show-popup').popup({});
 
         $('#choose_language').dropdown({
             onChange: function(value) {  
@@ -54,6 +55,7 @@ function TagsView() {
     };
 
     this.initRows = function() {
+        $('.show-popup').popup({ inline: true });
 
         arikaim.ui.button('.delete-button',function(element) {
             var uuid = $(element).attr('uuid');

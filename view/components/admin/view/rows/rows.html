@@ -14,7 +14,12 @@
 {% for item in items %}
 <tr id="{{ item.tag.uuid }}">
     <td>                  
-        <div class="ui basic mini icon button edit-button" uuid="{{ item.tag.uuid }}" {{ buttons.edit.title|attr('title') }} data-title="{{ item.word }}">
+        <div 
+            class="ui basic mini icon button edit-button show-popup" 
+            uuid="{{ item.tag.uuid }}" 
+            {{ buttons.edit.title|attr('title') }} 
+            {{ buttons.edit.title|attr('data-content') }} 
+            data-title="{{ item.word }}">
             <i class="icon edit"></i>                   
         </div>
         <div class="ui basic mini icon button delete-button" uuid="{{ item.tag.uuid }}" {{ buttons.delete.title|attr('title') }} data-title="{{ item.word }}">
