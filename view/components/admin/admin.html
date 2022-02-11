@@ -1,13 +1,9 @@
-{% set language = getLanguage() %}
-
-{% set items = [
-    { id: 'tags_tab',icon: 'list',active: true,component: 'tags::admin.menu',title: labels.view },
-    { id: 'settings_tab',icon: 'cogs',component: 'tags::admin.settings',title: labels.settings }
-] %}
-
 {{  component('semantic~tabs',{ 
-        items: items,
+        items: [
+            { id: 'tags_tab',icon: 'list',active: true,component: 'tags::admin.menu',title: labels.view },
+            { id: 'settings_tab',icon: 'cogs',component: 'tags::admin.settings',title: labels.settings }
+        ],
         menu: { component: 'system:admin.extensions.menu.actions', extension: 'tags' },
-        content: { component: 'tags::admin.menu', params: { language: language } } 
+        content: { component: 'tags::admin.menu', params: { language: getLanguage() } } 
     })
 }}

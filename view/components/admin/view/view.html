@@ -1,12 +1,10 @@
 {% set language = language|default(current_language) %}
 <div class="ui segment">
     <div class="ui stackable grid">
-        <div class="seven wide column">           
+        <div class="six wide column">           
             {{ component("semantic~search.form",{ namespace: 'tags' }) }}
         </div>
-        <div class="six wide column">   
-        </div>
-        <div class="two wide column right aligned">
+        <div class="ten wide column right aligned">
             {{  component('semantic~language.dropdown',{
                     name: 'language',
                     id: 'choose_language',
@@ -15,24 +13,24 @@
                     class: 'inline selection' 
                 })
             }}
-        </div> 
-        <div class="one wide column right floated">       
             {{ component('semantic~paginator.dropdown',{ namespace: 'tags' }) }}
         </div>
     </div>
 </div>
-<table class="ui compact stackable borderless basic table mt-2">
-    <thead>
-        <tr class="table-head">                
-            <th class="collapsing two wide">{{ columns.actions }}</th>
-            <th class="collapsing four wide">{{ columns.tag }}</th>
-            <th >{{ columns.relations }}</th>                 
-        </tr>
-    </thead>
-    <tbody id="tags_rows" component="tags::admin.view.rows" namespace="tags" language="{{ language }}">
-        {{ component('tags::admin.view.rows',{ language: language }) }}   
-    </tbody>  
-</table>
-<div class="mt-2" id="paginator">
-    {{ component('semantic~paginator',{ namespace: 'tags' }) }}
+<div class="ui segment">
+    <table class="ui compact stackable borderless basic table mt-2">
+        <thead>
+            <tr class="table-head">                
+                <th class="collapsing two wide">{{ columns.actions }}</th>
+                <th class="collapsing four wide">{{ columns.tag }}</th>
+                <th >{{ columns.relations }}</th>                 
+            </tr>
+        </thead>
+        <tbody id="tags_rows" component="tags::admin.view.rows" namespace="tags" language="{{ language }}">
+            {{ component('tags::admin.view.rows',{ language: language }) }}   
+        </tbody>  
+    </table>
+    <div class="mt-2" id="paginator">
+        {{ component('semantic~paginator',{ namespace: 'tags' }) }}
+    </div>
 </div>

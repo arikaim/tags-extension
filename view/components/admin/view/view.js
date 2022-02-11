@@ -60,8 +60,8 @@ function TagsView() {
         arikaim.ui.button('.delete-button',function(element) {
             var uuid = $(element).attr('uuid');
             var title = $(element).attr('data-title');
-            
             var message = arikaim.ui.template.render(self.getMessage('remove.content'),{ title: title });
+         
             modal.confirmDelete({ 
                 title: self.getMessage('remove.title'),
                 description: message
