@@ -3,8 +3,7 @@
     {% if uuid is not empty %}
         {% set tags = createModel('Tags','tags').findById(uuid) %}
     {% endif %}
-
-    <div class="ui segment mt-4">
+    <div class="mt-4">
         <div class="field">      
             <h4>{{ labels.tag }}</h4>         
             {{  component('tags::tags.dropdown',{ 
