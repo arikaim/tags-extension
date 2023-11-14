@@ -37,23 +37,21 @@ class TagsControlPanel extends ControlPanelApiController
     */
     public function addController($request, $response, $data) 
     {        
-        $this->onDataValid(function($data) {
-            $language = $data->get('language',null);
-            $tags = $data->get('tags',null);
-
-            $model = Model::Tags('tags');                
-            $createdTags = $model->add($tags,$language);
-            $result = (\is_array($createdTags) == true) ? \count($createdTags) : false; 
-            $this->setResponse(($result > 0),function() use($result,$language) {                                
-                $this
-                    ->message('add')
-                    ->field('tags',$result)
-                    ->field('language',$language);           
-            },'errors.add');
-        });
         $data           
             ->addRule('text:min=2','tags')           
-            ->validate();       
+            ->validate(true);       
+   
+        $tags = $data->get('tags',null);
+
+        $model = Model::Tags('tags');                
+        $createdTags = $model->add($tags);
+        $result = (\is_array($createdTags) == true) ? \count($createdTags) : false; 
+        
+        $this->setResponse(($result > 0),function() use($result) {                                
+            $this
+                ->message('add')
+                ->field('tags',$result);                
+        },'errors.add');
     }
 
     /**
@@ -66,23 +64,27 @@ class TagsControlPanel extends ControlPanelApiController
     */
     public function updateController($request, $response, $data) 
     {        
-        $this->onDataValid(function($data) {
-            $language = $data->get('language',null);
-            $tags = $data->get('tags',null);
-
-            $model = Model::Tags('tags');                       
-            $result = $model->saveTranslation(['word' => $tags],$language,$data['uuid']);
-
-            $this->setResponse((bool)$result,function() use($language,$model) {                                
-                $this
-                    ->message('update')
-                    ->field('uuid',$model->uuid)
-                    ->field('language',$language);           
-            },'errors.update');
-        });
         $data           
             ->addRule('text:min=2','tags')           
-            ->validate();       
+            ->validate(true);       
+
+        $tags = $data->get('tags',null);
+
+        $model = Model::Tags('tags')->findById($data['uuid']);  
+        if ($model == null) {
+            $this->error('Not valid tag id');
+            return false;
+        }               
+
+        $result = $model->update([
+            'word' => $tags
+        ]);
+
+        $this->setResponse((bool)$result,function() use($model) {                                
+            $this
+                ->message('update')
+                ->field('uuid',$model->uuid);
+        },'errors.update');
     }
    
     /**

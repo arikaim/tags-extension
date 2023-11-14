@@ -11,10 +11,6 @@
         "relations": {
             "content": "Relations",          
             "title": "View Relations"
-        },
-        "translations": {
-            "content": "Translations",          
-            "title": "View Translations"
         }
     }
 }

@@ -57,7 +57,8 @@ class Tags extends Model
      *
      * @var array
      */
-    protected $translatedAttributes = [          
+    protected $translatedAttributes = [ 
+        'word'         
     ];
 
     /**
@@ -66,7 +67,9 @@ class Tags extends Model
      * @var array
      */
     protected $fillable = [
-        'position'      
+        'position',
+        'word',
+        'uuid'  
     ];
     
     /**
@@ -77,33 +80,13 @@ class Tags extends Model
     public $timestamps = false;
     
     /**
-     * word attribute
+     * Get slug from word
      *
-     * @return string|null
-     */
-    public function getWordAttribute()
-    {
-        $model = $this->translation();
-
-        return ($model !== false) ? $model->word : null;
-    }
-
-    /**
-     * Get slug from english translation
-     *
-     * @param string|int|null $id
-     * @param string|null $language
      * @return string
      */
-    public function getSlug($id = null, ?string $language = null): ?string
+    public function getSlug(): ?string
     {
-        $language = $language ?? $this->getCurrentLanguage();
-
-        $model = (empty($id) == false) ? $this->findByid($id) : $this;
-        $translation = $model->translation($language);
-        $translation = (\is_object($translation) === false) ? $model->translation('en') : $translation; 
-
-        return Utils::slug($translation->word);
+        return Utils::slug($this->word);
     }
 
     /**
@@ -115,7 +98,7 @@ class Tags extends Model
     public function remove($id): bool
     {
         $model = $this->findById($id);
-        if (empty($model) == true) {
+        if ($model == null) {
             return false;
         }    
 
@@ -128,16 +111,6 @@ class Tags extends Model
     }
 
     /**
-     * Title attribute
-     *
-     * @return string|null
-     */
-    public function getTitleAttribute()
-    {
-        return $this->getTranslationWord();        
-    }
-
-    /**
      * Return true if tag exist
      *
      * @param string $tag
@@ -147,9 +120,10 @@ class Tags extends Model
     public function hasTag(string $tag, $excludeId = null): bool
     {
         $model = $this->findTag($tag);
-        if (empty($model) == true) {
+        if ($model == null) {
             return false;
         }
+
         if (empty($excludeId) == false) {
             return ($model->id == $excludeId || $model->uuid == $excludeId) ? false : true;
         }
@@ -163,55 +137,42 @@ class Tags extends Model
      * @param string $tag
      * @return Model|null
      */
-    public function findTag(string $tag)
+    public function findTag(string $tag): ?object
     { 
-        $query = $this->whereHas('translations',function ($query) use($tag) {
-            $query->where('word', '=',$tag);
-        });
-
-        return $query->first();             
+        return $this->where('word', '=',$tag)->first();             
     }
 
     /**
      * Create tag
      *
      * @param string $tag
-     * @param string $language
-     * @return Model|false
+     * @return Model|null
      */
-    public function createTag(string $tag, ?string $language = null)
+    public function createTag(string $tag): ?object
     {       
-        $language = $language ?? 'en';
         $model = $this->findTag($tag);
 
         if ($model == null) {               
-            $model = $this->create([]);
-            if (\is_object($model) == true) {
-                $result = $model->saveTranslation(['word' => $tag],$language,$model->id); 
-                return ($result === false) ? false : $result;    
-            }
-            return false;
+            return $this->create(['word' => $tag]);            
         }
     
-        return false;
+        return null;
     }
 
     /**
      * Add tag(s)
      *
-     * @param string|array $tag
-     * @param string|null $language
+     * @param string|array $tags    
      * @return array|false
      */
-    public function add($tag, ?string $language = null)
+    public function add($tags)
     {
-        $language = $language ?? 'en';
-        if (empty($tag) == true) {
+        if (empty($tags) == true) {
             return false;
         }
-        $tags = Text::tokenize($tag);
+        $tags = Text::tokenize($tags);
 
-        return $this->addTags($tags,$language);
+        return $this->addTags($tags);
     }
 
     /**
@@ -236,19 +197,18 @@ class Tags extends Model
     /**
      * Add tags
      *
-     * @param array $tags
-     * @param string|null $language
+     * @param array $tags    
      * @return array
      */
-    public function addTags(array $tags, ?string $language = null): array
+    public function addTags(array $tags): array
     {
         $result = [];
         foreach ($tags as $tag) {  
             $tag = \trim($tag);
             $tag = Utils::slug($tag);
             if (empty($tag) == false) {   
-                $model = $this->createTag($tag,$language);
-                if (\is_object($model) == true) {
+                $model = $this->createTag($tag);
+                if ($model !== null) {
                     $result[] = $model->id;
                 }                 
             }                                     

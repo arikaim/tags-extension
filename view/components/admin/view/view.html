@@ -4,15 +4,7 @@
         <div class="six wide column">           
             {{ component("semantic~search.form",{ namespace: 'tags' }) }}
         </div>
-        <div class="ten wide column right aligned">
-            {{  component('semantic~language.dropdown',{
-                    name: 'language',
-                    id: 'choose_language',
-                    selected: language,
-                    tooltip: tooltips.language,
-                    class: 'inline selection' 
-                })
-            }}
+        <div class="ten wide column right aligned">           
             {{ component('semantic~paginator.dropdown',{ namespace: 'tags' }) }}
         </div>
     </div>

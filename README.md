@@ -14,5 +14,7 @@ Arikaim CMS tags extension.
 #### Installation
 
 ```sh
+
 composer require arikaim/tags-extension
+
 ```

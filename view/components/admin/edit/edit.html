@@ -1,44 +1,21 @@
-{% component 'semantic~tabs.vertical.content' %}
-    {% set language = language|default(current_language) %}  
-    {% if uuid is not empty %}
-        {% set tags = createModel('Tags','tags').findById(uuid) %}
-    {% endif %}
+{% if uuid is not empty %}
+    {% set tags = createModel('Tags','tags').findById(uuid) %}
+{% endif %}
+
+{% component 'semantic~tabs.vertical.content' %} 
     <div class="mt-4">
         <div class="field">      
             <h4>{{ labels.tag }}</h4>         
             {{  component('tags::tags.dropdown',{ 
                     class: 'fluid',
                     language: language,
-                    selected: tags.translation(language).word,
+                    selected: tags.word,
                     icon: '' 
                 }) 
             }}        
         </div>
     </div>    
-    <div class="mt-8 {{ (uuid is empty) ? 'hidden' : '' }}" id="tag_content">   
-        <div>
-            <h4>{{ labels.language }}</h4>
-            {{  component('semantic~language.dropdown',{
-                    name: 'language',
-                    id: 'choose_language',
-                    selected: language,
-                    class: 'inline search selection' 
-                })
-            }} 
-            {% if hasExtension('translations') == true %}
-                {{  component('translations::admin.translate.button',{
-                        model: 'TagsTranslations',
-                        extension: 'tags', 
-                        language: language,
-                        uuid: tags.translation(language).uuid,
-                        icon: 'language blue',
-                        class: 'basic right floated',
-                        callback: 'applyTranslation',
-                        fields: 'word'                
-                    }) 
-                }}       
-            {% endif %}  
-        </div>  
+    <div class="mt-8 {{ (uuid is empty) ? 'hidden' : '' }}" id="tag_content">         
         <div class="mt-4" id="tag_form_content" uuid="{{ uuid }}">
             {% if uuid is not empty %}
                 {{ component('tags::admin.form',{ uuid: uuid }) }}       

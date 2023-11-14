@@ -35,29 +35,26 @@ class TagsApi extends ApiController
      * @return Psr\Http\Message\ResponseInterface
     */
     public function getList($request, $response, $data)
-    {
-        $this->onDataValid(function($data) {
-            $language = $this->getPageLanguage($data);
-            $search = $data->get('query','');
-            $size = $data->get('size',15);
-            $query = Model::Tags('tags')->getTranslationsQuery($language);
-            $model = $query->where('word','like','%' . $search . '%')->take($size)->get();
+    {   
+        $data->validate(true);
+        $search = $data->get('query','');
+        $size = $data->get('size',15);
+        $query = Model::Tags('tags');
+        $model = $query->where('word','like','%' . $search . '%')->take($size)->get();
 
-            $this->setResponse(\is_object($model),function() use($model) {     
-                $items = [];
-                foreach ($model as $item) {
-                    $items[] = [
-                        'name'  => $item['word'],
-                        'value' => $item['tags_id']
-                    ];
-                }
-                $this                    
-                    ->field('success',true)
-                    ->field('results',$items);  
-            },'errors.list');
-        });
-        $data->validate();
-
+        $this->setResponse(\is_object($model),function() use($model) {     
+            $items = [];
+            foreach ($model as $item) {
+                $items[] = [
+                    'name'  => $item['word'],
+                    'value' => $item['id']
+                ];
+            }
+            $this                    
+                ->field('success',true)
+                ->field('results',$items);  
+        },'errors.list');
+      
         return $this->getResponse(true);
     }
 }

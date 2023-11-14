@@ -34,9 +34,6 @@ class Tags extends Extension
         $this->createDbTable('TagsRelationsSchema');
         // Console
         $this->registerConsoleCommand('TagsDelete');
-        $this->registerConsoleCommand('TranslateTags');
-        // Jobs
-        $this->addJob("TranslateTagsJob",'translateTags',true);        
     }   
 
     /**
@@ -45,9 +42,6 @@ class Tags extends Extension
      * @return void
      */
     public function unInstall()
-    {
-        $this->dropDbTable('TagsRelationsSchema');
-        $this->dropDbTable('TagsTranslationsSchema');
-        $this->dropDbTable('TagsSchema');       
+    {  
     }
 }

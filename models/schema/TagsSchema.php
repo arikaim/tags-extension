@@ -34,7 +34,9 @@ class TagsSchema extends Schema
         // columns    
         $table->id();      
         $table->prototype('uuid');            
-        $table->position();       
+        $table->position();    
+        $table->string('word')->nullable(false);          
+        $table->unique('word');   
     }
 
     /**
@@ -44,6 +46,10 @@ class TagsSchema extends Schema
      * @return void
      */
     public function update($table) 
-    {              
+    {      
+        if ($this->hasColumn($word) == false) {
+            $table->string('word')->nullable(false);          
+            $table->unique('word');   
+        }       
     }
 }

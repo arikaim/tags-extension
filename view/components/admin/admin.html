@@ -1,7 +1,6 @@
 {{  component('semantic~tabs',{ 
         items: [
-            { id: 'tags_tab',icon: 'list',active: true,component: 'tags::admin.menu',title: labels.view },
-            { id: 'settings_tab',icon: 'cogs',component: 'tags::admin.settings',title: labels.settings }
+            { id: 'tags_tab',icon: 'list',active: true,component: 'tags::admin.menu',title: labels.view }           
         ],
         menu: { component: 'system:admin.extensions.menu.actions', extension: 'tags' },
         content: { component: 'tags::admin.menu', params: { language: getLanguage() } } 
