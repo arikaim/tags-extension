@@ -1,4 +1,3 @@
-{% set language = language|default(current_language) %}
 {% set max = max|default(10) %}
 {% set page_url = page_url|default('{{ slug }}') %}
 {% set tags = createModel('Tags','tags') %}
@@ -15,7 +14,7 @@
     {% set url = page_url|renderText({ slug: item.getSlug() }) %}
     <div class="item {{ item_class }}">      
         <a href="{{ url(url,true) }}">        
-            <span class="{{ item_text_class }}">{{ item.translation(language).word }}</span>
+            <span class="{{ item_text_class }}">{{ item.word }}</span>
         </a>           
     </div>   
 {% endfor %}  

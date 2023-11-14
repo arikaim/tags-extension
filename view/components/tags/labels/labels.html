@@ -1,9 +1,8 @@
-{% set language = language|default(current_language) %}
 {% set max = max|default(15) %}
 {% set per_group = per_group|default(5) %}
 {% set page_url = page_url|default('tags/{{ slug }}') %}
 {% set model = createModel('Tags','tags') %}
-{% set tags = model.getTranslationsQuery(language) %}
+{% set tags = model.orderBy('id') %}
 
 {% if random == true %}
     {% set tags = tags.orderByRaw('RAND()') %}
@@ -16,11 +15,11 @@
 {% endif %}
 
 {% for item in tags.get() %}
-    {% set slug = model.getSlug(item.tags_id,language) %}
+    {% set slug = model.getSlug() %}
     {% if slug is not empty %}
         {% set url = page_url|renderText({ slug: slug }) %}
         <div class="{{ class }}">   
-            <a class="ui label {{ label_class }}" href="{{ url(url,false,language) }}">{{ item.word }}</a>
+            <a class="ui label {{ label_class }}" href="{{ url(url,false) }}">{{ item.word }}</a>
         </div>
     {% endif %}
 {% endfor %}
