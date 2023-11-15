@@ -47,7 +47,7 @@ class TagsSchema extends Schema
      */
     public function update($table) 
     {      
-        if ($this->hasColumn($word) == false) {
+        if ($this->hasColumn('word') == false) {
             $table->string('word')->nullable(false);          
             $table->unique('word');   
         }       
