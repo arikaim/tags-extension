@@ -1,27 +1,28 @@
-{% component 'semantic~tabs.vertical.content' %}
 {% if uuid is not empty %}
     {% set tags = createModel('Tags','tags').findById(uuid) %}
 {% endif %}
-<div class="ui equal width form mt-4">
-    <div class="ui mt-4">
-        <div class="field">
-            {% if tags is not empty %}
-                {{ component("tags::tags.label",{ tag: tags.translation(language).word, class: 'basic horizontal', 'icon': 'tag', show_label: false }) }}        
-            {% else %}
-                {{ component('tags::tags.dropdown',{ class: '' }) }}
-            {% endif %}    
-        </div>
-    </div>    
-</div>
-<div class="mt-8" id="relations_content">   
-    {% if uuid is not empty %}
-    {{  component('system:admin.orm.relations.view',{ 
-            uuid: uuid,
-            extension: 'tags',
-            model: 'TagsRelations',
-            id: tags.id 
-        }) 
-    }}
-    {% endif %}
-</div>
+
+{% component 'semantic~panel' %}
+    <div class="ui equal width form mt-4">
+        <div class="ui mt-4">
+            <div class="field">           
+                {{  component("tags::tags.label",{ 
+                        tag: tags.word, 
+                        class: 'basic horizontal', 
+                        icon: 'tag', 
+                        show_label: false 
+                    }) 
+                }}        
+            </div>
+        </div>    
+    </div>
+    <div class="mt-8" id="relations_content">   
+        {{  component('system:admin.orm.relations.view',{ 
+                uuid: tags.uuid,
+                extension: 'tags',
+                model: 'TagsRelations',
+                id: tags.id 
+            }) 
+        }}
+    </div>
 {% endcomponent %}

@@ -1,0 +1,44 @@
+{% if uuid is not empty %}
+    {% set tag = createModel('Tags','tags').findById(uuid) %}  
+{% endif %}
+{% component 'semantic~panel' %}
+<div>
+    <table class="ui very basic definition table">
+        <thead>
+            <tr>
+                <th class="three wide"></th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td class="right aligned">{{ labels.id }}</td>
+                <td>
+                    <div class="ui basic label">
+                        {{ tag.id }}
+                    </div>
+                    {{ tag.uuid }}
+                </td>
+            </tr>
+            <tr>
+                <td class="right aligned">{{ labels.title }}</td>
+                <td>
+                    {{ tag.word }}
+                </td>
+            </tr>
+            <tr>
+                <td class="right aligned">{{ labels.relations }}</td>
+                <td>
+                    {{  component ('system:admin.orm.relations.count',{ 
+                            extension: 'tags',
+                            model: 'TagsRelations',
+                            id: tag.id, 
+                            class: 'basic mini' 
+                        }) 
+                    }}              
+                </td>
+            </tr>
+        </tbody>  
+    </table>     
+</div>
+{% endcomponent %}

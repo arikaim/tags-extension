@@ -1,8 +1,5 @@
-{% component 'semantic~tabs.vertical.content' %}
-<div class="ui mt-8">  
-    <div class="ui mt-2" id="form_content"> 
-        {{ component('tags::admin.form',{ parent_id: parent_id, language: language }) }}
+{% component 'semantic~panel' %}
+    <div class="mt-2"> 
+        {{ component('tags::admin.form',{ parent_id: parent_id }) }}
     </div> 
-</div>
-  
 {% endcomponent %}

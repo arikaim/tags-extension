@@ -12,7 +12,7 @@ namespace Arikaim\Extensions\Tags\Models;
 use Illuminate\Database\Eloquent\Model;
 
 use Arikaim\Extensions\Tags\Models\TagsTranslations;
-use Arikaim\Core\Db\Model as DbModel;
+use Arikaim\Extensions\Tags\Models\TagsRelations;
 use Arikaim\Core\Utils\Text;
 use Arikaim\Core\Utils\Utils;
 
@@ -90,21 +90,31 @@ class Tags extends Model
     }
 
     /**
+     * Tag relations
+     *
+     * @return Relation|null
+     */
+    public function relations()
+    {
+        return $this->hasMany(TagsRelations::class,'tags_id');
+    }
+
+    /**
      * Remove tag, translations and relations
      *
      * @param string|integer $id
      * @return bool
      */
-    public function remove($id): bool
+    public function remove($id = null): bool
     {
-        $model = $this->findById($id);
+        $model = (empty($id) == true) ? $this : $this->findById($id);
         if ($model == null) {
             return false;
         }    
 
-        $relations = DbModel::TagsRelations('tags');
-        $relations->deleteRelations($model->id);
-
+        // delete relations
+        $this->relations()->delete();
+        // remove relation
         $model->removeTranslations();
 
         return (bool)$model->delete();      
@@ -139,7 +149,7 @@ class Tags extends Model
      */
     public function findTag(string $tag): ?object
     { 
-        return $this->where('word', '=',$tag)->first();             
+        return $this->where('word','=',$tag)->first();             
     }
 
     /**
@@ -215,24 +225,5 @@ class Tags extends Model
         }
 
         return $result;
-    }
-
-    /**
-     * Get translation title
-     *
-     * @param string|null $language
-     * @param string|null $default
-     * @return string|null
-     */
-    public function getTranslationWord(?string $language = null, ?string $default = null): ?string
-    {
-        $language = $language ?? 'en';
-
-        $model = $this->translation($language);     
-        if (\is_object($model) == false) {
-            return $default; 
-        } 
-        
-        return $model->word ?? null;
     }
 }

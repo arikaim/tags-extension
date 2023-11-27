@@ -2,24 +2,8 @@
     {% set tags = createModel('Tags','tags').findById(uuid) %}
 {% endif %}
 
-{% component 'semantic~tabs.vertical.content' %} 
-    <div class="mt-4">
-        <div class="field">      
-            <h4>{{ labels.tag }}</h4>         
-            {{  component('tags::tags.dropdown',{ 
-                    class: 'fluid',
-                    language: language,
-                    selected: tags.word,
-                    icon: '' 
-                }) 
-            }}        
-        </div>
-    </div>    
-    <div class="mt-8 {{ (uuid is empty) ? 'hidden' : '' }}" id="tag_content">         
-        <div class="mt-4" id="tag_form_content" uuid="{{ uuid }}">
-            {% if uuid is not empty %}
-                {{ component('tags::admin.form',{ uuid: uuid }) }}       
-            {% endif %} 
-        </div>        
+{% component 'semantic~panel' %} 
+    <div class="mt-4" >         
+        {{ component('tags::admin.form',{ uuid: uuid }) }}       
     </div>
 {% endcomponent %}

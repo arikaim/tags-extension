@@ -36,7 +36,9 @@ class TagsApi extends ApiController
     */
     public function getList($request, $response, $data)
     {   
-        $data->validate(true);
+        $data
+            ->validate(true);
+            
         $search = $data->get('query','');
         $size = $data->get('size',15);
         $query = Model::Tags('tags');

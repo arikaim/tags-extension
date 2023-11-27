@@ -10,27 +10,41 @@
 {% endif %}
 {% for item in items %}
 <tr id="{{ item.uuid }}">
-    <td>                  
+    <td>     
         <div 
-            class="ui basic mini icon button edit-button show-popup" 
-            uuid="{{ item.uuid }}" 
-            {{ buttons.edit.title|attr('title') }} 
-            {{ buttons.edit.title|attr('data-content') }} 
-            data-title="{{ item.word }}">
+            mountTo="tag_details"
+            component="tags::admin.details"
+            params="uuid:{{ item.uuid }}"
+            class="ui basic mini compact icon button tag-action-button" 
+            {{ buttons.edit.title|attr('title') }}>
+            <i class="icon info"></i>                   
+        </div>             
+        <div 
+            mountTo="tag_details"
+            component="tags::admin.edit"
+            params="uuid:{{ item.uuid }}"
+            class="ui basic mini icon compact button tag-action-button" 
+            {{ buttons.edit.title|attr('title') }}>
             <i class="icon edit"></i>                   
         </div>
-        <div class="ui basic mini icon button delete-button" uuid="{{ item.uuid }}" {{ buttons.delete.title|attr('title') }} data-title="{{ item.word }}">
-            <i class="icon orange trash"></i>                   
-        </div>
-        <div class="ui basic mini icon button relations-button" uuid="{{ item.uuid }}" {{ buttons.relations.title|attr('title') }}>
+        <div 
+            mountTo="tag_details"
+            component="tags::admin.relations"
+            params="uuid:{{ item.uuid }}"
+            class="ui basic mini icon compact button tag-action-button" 
+            {{ buttons.relations.title|attr('title') }}>
             <i class="icon linkify"></i>                   
+        </div>
+        <div 
+            class="ui basic mini icon button delete-button" 
+            uuid="{{ item.uuid }}" 
+            {{ buttons.delete.title|attr('title') }} 
+            data-title="{{ item.word }}">
+            <i class="icon orange trash"></i>                   
         </div>
     </td>
     <td>       
         {{ item.word }}
-    </td>
-    <td>
-        {{ component ('system:admin.orm.relations.count',{ extension: 'tags',model: 'TagsRelations',id: item.id, class: 'basic mini' }) }}              
     </td>
 </tr>
 {% endfor %}

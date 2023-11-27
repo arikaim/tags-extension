@@ -1,8 +1,6 @@
 {
-    "title": {
-        "content": "Relations",
-        "icon": "linkify"
-    },
+    "title": "Relations",   
+    "icon": "linkify",
     "labels": {
         "tag": "Tag"
     }

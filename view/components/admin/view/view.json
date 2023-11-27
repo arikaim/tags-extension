@@ -4,7 +4,7 @@
         "icon": "list"              
     },
     "tooltips": {
-        "language": "Select tags language"
+        "create": "Add Tag"
     },
     "columns": {
         "tag": "Tag",

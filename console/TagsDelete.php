@@ -39,25 +39,17 @@ class TagsDelete extends ConsoleCommand
         $this->showTitle();
        
         $tags = Model::Tags('tags')->all();
-        $relations = Model::TagsRelations('tags');
-
         $this->writeFieldLn('Total',$tags->count());
 
         $deleted = 0;
         foreach ($tags as $item) {           
-            $count = $item->translations()->count();
-            $rows = $relations->getItemsQuery($item->id);
-
-            if ($count == 0) {             
-                $item->remove($item->id);
-                $deleted++;
-            }
+            $result = $item->remove();    
             
-            if ($rows->count() == 0) {                              
-                $item->remove($item->id);
+            if ($result !== false) {
                 $deleted++;
             }
         }
+
         $this->writeFieldLn('Deleted',$deleted);
         
         $this->showCompleted();

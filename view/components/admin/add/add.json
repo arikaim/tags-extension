@@ -1,8 +1,4 @@
 {   
-    "title": {
-        "content": "Add Tag",
-        "icon": "plus"
-    },
-    "labels": {       
-    }   
+    "title": "Add Tag",    
+    "icon": "plus"  
 }

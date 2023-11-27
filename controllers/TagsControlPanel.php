@@ -97,16 +97,16 @@ class TagsControlPanel extends ControlPanelApiController
     */
     public function deleteController($request, $response, $data)
     { 
-        $this->onDataValid(function($data) {
-            $uuid = $data->get('uuid');
-            $result = Model::Tags('tags')->remove($uuid);
+        $data
+            ->validate(true);
+            
+        $uuid = $data->get('uuid');
+        $result = Model::Tags('tags')->remove($uuid);
 
-            $this->setResponse((bool)$result,function() use($uuid) {            
-                $this
-                    ->message('delete')
-                    ->field('uuid',$uuid);  
-            },'errors.delete');
-        }); 
-        $data->validate();
+        $this->setResponse((bool)$result,function() use($uuid) {            
+            $this
+                ->message('delete')
+                ->field('uuid',$uuid);  
+        },'errors.delete');
     }
 }

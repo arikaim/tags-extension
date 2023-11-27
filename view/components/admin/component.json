@@ -1,7 +1,6 @@
 {
     "include": {       
         "js": [
-            "translations::admin"
         ]
     },
     "access": {

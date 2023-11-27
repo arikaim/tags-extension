@@ -11,21 +11,10 @@ function TagsView() {
   
     this.init = function() {
         this.loadMessages('tags::admin.view');
-        var language = $('#tags_rows').attr('language');
-        $('.show-popup').popup({});
-
-        $('#choose_language').dropdown({
-            onChange: function(value) {  
-                $('#tags_rows').attr('language',value);     
-                paginator.setParams({ language: value });  
-                search.options.params = { language: value };     
-                self.loadRows(value);       
-            }
-        }); 
-
+   
         paginator.init('tags_rows',{
             name: 'tags::admin.view.rows',
-            params: { language: language }
+            params: {}
         },'tags');
         
         search.init({
@@ -41,21 +30,23 @@ function TagsView() {
             self.initRows();    
         },'tagsSearch');
 
+        arikaim.ui.loadComponentButton('.create-tag');
+
         this.initRows();
     };
 
-    this.loadRows = function(language) {
+    this.loadRows = function() {
         arikaim.page.loadContent({
             id: 'tags_rows',
             component: 'tags::admin.view.rows',
-            params: { language: language }
+            params: {}
         },function() {
             self.initRows();
         });   
     };
 
     this.initRows = function() {
-        $('.show-popup').popup({ inline: true });
+        arikaim.ui.loadComponentButton('.tag-action-button');
 
         arikaim.ui.button('.delete-button',function(element) {
             var uuid = $(element).attr('uuid');
@@ -71,39 +62,6 @@ function TagsView() {
                 });
             });
         });
-
-        arikaim.ui.button('.edit-button',function(element) {
-            var uuid = $(element).attr('uuid');
-            
-            arikaim.ui.setActiveTab('#edit_tag','.tags-tab-item')   
-            arikaim.page.loadContent({
-                id: 'tags_content',
-                component: 'tags::admin.edit',
-                params: { uuid: uuid }
-            });            
-        });
-
-        arikaim.ui.button('.relations-button',function(element) {
-            var uuid = $(element).attr('uuid');
-            
-            arikaim.ui.setActiveTab('#relations','.tags-tab-item')   
-            arikaim.page.loadContent({
-                id: 'tags_content',
-                component: 'tags::admin.relations',
-                params: { uuid: uuid }
-            });            
-        });
-
-        arikaim.ui.button('.translations-button',function(element) {
-            var uuid = $(element).attr('uuid');
-            
-            arikaim.ui.setActiveTab('#translations','.tags-tab-item')   
-            arikaim.page.loadContent({
-                id: 'tags_content',
-                component: 'tags::admin.translations',
-                params: { uuid: uuid }
-            });            
-        });
     };
 }
 
@@ -111,5 +69,4 @@ var tagsView = createObject(TagsView,ControlPanelView);
 
 arikaim.component.onLoaded(function() {
     tagsView.init();   
-    tagsView.initRows();
 });

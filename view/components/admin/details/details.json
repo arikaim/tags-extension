@@ -1,0 +1,10 @@
+{
+    "title": "Tag Details",
+    "icon": "info",
+    "labels": {        
+        "id": "Id",          
+        "slug": "Slug",           
+        "title": "Word",             
+        "relations": "Relations"        
+    }
+}

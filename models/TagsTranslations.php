@@ -67,7 +67,7 @@ class TagsTranslations extends Model
      * @param string $word
      * @return Model|null
      */
-    public function fidTag(?string $word)
+    public function findTag(?string $word)
     {
         if (empty($word) == true) {
             return null;

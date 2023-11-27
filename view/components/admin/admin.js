@@ -23,34 +23,10 @@ function TagsControlPanel() {
     this.getList = function(query, onSuccess, onError) {
         return arikaim.get('/api/admin/tags/list/' + query,onSuccess,onError);          
     };
-   
-    this.loadAddTag = function(language) {
-        arikaim.ui.setActiveTab('#add_tag','.tags-tab-item')   
-        arikaim.page.loadContent({
-            id: 'tags_content',
-            component: 'tags::admin.add',
-            params: { language: language }
-        });          
-    };
-
-    this.initTagsForm = function() {
-        arikaim.ui.form.onSubmit("#tags_form",function() {  
-            var language = $('#choose_language').dropdown('get value');
-            $('#language').val(language);
-
-            return tags.update('#tags_form');
-        },function(result) {          
-            arikaim.ui.form.showMessage(result.message);        
-        });
-    }
-
-    this.init = function() {           
-        arikaim.ui.tab();
-    };
 }
 
 var tags = new TagsControlPanel();
 
 arikaim.component.onLoaded(function() {
-    tags.init();
+    arikaim.ui.tab();
 });

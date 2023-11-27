@@ -1,28 +1,41 @@
-{% set language = language|default(current_language) %}
-<div class="ui segment">
-    <div class="ui stackable grid">
-        <div class="six wide column">           
-            {{ component("semantic~search.form",{ namespace: 'tags' }) }}
+<div class="ui two column grid">
+    <div class="column">
+        <div class="ui segment">
+            <div class="ui stackable grid">
+                <div class="one wide column p-1">
+                    <button 
+                        mountTo="tag_details"
+                        component="tags::admin.add"
+                        title="{{ tooltip.create }}"
+                        class="ui mini curcular green icon button create-tag">
+                        <i class="icon plus"></i>
+                    </button>
+                </div>
+                <div class="ten wide column">
+                    {{ component("semantic~search.form",{ namespace: 'tags' }) }}
+                </div>
+                <div class="five wide column right aligned">           
+                    {{ component('semantic~paginator.dropdown',{ namespace: 'tags' }) }}
+                </div>
+            </div>
         </div>
-        <div class="ten wide column right aligned">           
-            {{ component('semantic~paginator.dropdown',{ namespace: 'tags' }) }}
+        <div class="ui segment">
+            <table class="ui compact stackable borderless basic table">
+                <thead>
+                    <tr>                
+                        <th class="three wide">{{ columns.actions }}</th>
+                        <th>{{ columns.tag }}</th>    
+                    </tr>
+                </thead>
+                <tbody id="tags_rows" component="tags::admin.view.rows" namespace="tags">
+                    {{ component('tags::admin.view.rows',{}) }}   
+                </tbody>  
+            </table>
+            <div class="mt-2" id="paginator">
+                {{ component('semantic~paginator',{ namespace: 'tags' }) }}
+            </div>
         </div>
     </div>
-</div>
-<div class="ui segment">
-    <table class="ui compact stackable borderless basic table">
-        <thead>
-            <tr class="">                
-                <th class="collapsing two wide">{{ columns.actions }}</th>
-                <th class="collapsing four wide">{{ columns.tag }}</th>
-                <th >{{ columns.relations }}</th>                 
-            </tr>
-        </thead>
-        <tbody id="tags_rows" component="tags::admin.view.rows" namespace="tags" language="{{ language }}">
-            {{ component('tags::admin.view.rows',{ language: language }) }}   
-        </tbody>  
-    </table>
-    <div class="mt-2" id="paginator">
-        {{ component('semantic~paginator',{ namespace: 'tags' }) }}
+    <div class="column" id="tag_details">
     </div>
 </div>
