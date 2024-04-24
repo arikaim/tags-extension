@@ -29,9 +29,9 @@ class Tags extends Extension
         $this->addApiRoute('DELETE','/api/admin/tags/delete/{uuid}','TagsControlPanel','delete','session');   
         $this->addApiRoute('GET','/api/admin/tags/list/[{query}]','TagsApi','getList','session');                
         // Create db tables
-        $this->createDbTable('TagsSchema');
-        $this->createDbTable('TagsTranslationsSchema');
-        $this->createDbTable('TagsRelationsSchema');
+        $this->createDbTable('Tags');
+        $this->createDbTable('TagsTranslations');
+        $this->createDbTable('TagsRelations');
         // Console
         $this->registerConsoleCommand('TagsDelete');
     }   

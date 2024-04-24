@@ -30,6 +30,39 @@ function TagsView() {
             self.initRows();    
         },'tagsSearch');
 
+        arikaim.events.on('tag.create',function(tags) {
+            if (isArray(tags) == false) {
+                return false;
+            }
+
+            tags.forEach(function(item) {
+                arikaim.page.loadContent({
+                    id: 'tags_rows',
+                    prepend: true,
+                    component: 'tags::admin.view.row',
+                    params: {
+                        uuid: item
+                    }
+                },function() {
+                    self.initRows();
+                });  
+            });
+             
+        },'tagCreate');
+
+        arikaim.events.on('tag.update',function(uuid) {
+            arikaim.page.loadContent({
+                id: 'row_' + uuid,   
+                replace: true,             
+                component: 'tags::admin.view.row',
+                params: {
+                    uuid: uuid
+                }
+            },function() {
+                self.initRows();
+            });  
+        },'tagUpdate');
+
         arikaim.ui.loadComponentButton('.create-tag');
 
         this.initRows();
@@ -58,7 +91,7 @@ function TagsView() {
                 description: message
             },function() {
                 tags.delete(uuid,function(result) {
-                    arikaim.ui.table.removeRow('#' + uuid);               
+                    arikaim.ui.table.removeRow('#row_' + uuid);               
                 });
             });
         });

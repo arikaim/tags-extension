@@ -5,6 +5,8 @@ arikaim.component.onLoaded(function() {
         return tags.add('#tags_form');
     },function(result) {
         arikaim.ui.form.clear('#tags_form');
-        arikaim.ui.form.showMessage(result.message);        
+        arikaim.ui.form.showMessage(result.message);    
+          
+        arikaim.events.emit('tag.create',result.tags);
     });
 });

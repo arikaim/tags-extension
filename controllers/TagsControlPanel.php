@@ -45,8 +45,9 @@ class TagsControlPanel extends ControlPanelApiController
 
         $model = Model::Tags('tags');                
         $createdTags = $model->add($tags);
-        $result = (\is_array($createdTags) == true) ? \count($createdTags) : false; 
+        $result = (\is_array($createdTags) == true) ? $createdTags : []; 
         
+
         $this->setResponse(($result > 0),function() use($result) {                                
             $this
                 ->message('add')

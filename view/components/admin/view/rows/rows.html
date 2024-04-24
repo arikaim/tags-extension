@@ -9,42 +9,5 @@
     </tr>
 {% endif %}
 {% for item in items %}
-<tr id="{{ item.uuid }}">
-    <td>     
-        <div 
-            mountTo="tag_details"
-            component="tags::admin.details"
-            params="uuid:{{ item.uuid }}"
-            class="ui basic mini compact icon button tag-action-button" 
-            {{ buttons.edit.title|attr('title') }}>
-            <i class="icon info"></i>                   
-        </div>             
-        <div 
-            mountTo="tag_details"
-            component="tags::admin.edit"
-            params="uuid:{{ item.uuid }}"
-            class="ui basic mini icon compact button tag-action-button" 
-            {{ buttons.edit.title|attr('title') }}>
-            <i class="icon edit"></i>                   
-        </div>
-        <div 
-            mountTo="tag_details"
-            component="tags::admin.relations"
-            params="uuid:{{ item.uuid }}"
-            class="ui basic mini icon compact button tag-action-button" 
-            {{ buttons.relations.title|attr('title') }}>
-            <i class="icon linkify"></i>                   
-        </div>
-        <div 
-            class="ui basic mini icon button delete-button" 
-            uuid="{{ item.uuid }}" 
-            {{ buttons.delete.title|attr('title') }} 
-            data-title="{{ item.word }}">
-            <i class="icon orange trash"></i>                   
-        </div>
-    </td>
-    <td>       
-        {{ item.word }}
-    </td>
-</tr>
+    {{ component('tags::admin.view.row',{ item: item }) }}
 {% endfor %}
